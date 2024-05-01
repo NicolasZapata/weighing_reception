@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--Todo: Configuration Tree-->
+    <record model="ir.ui.view" id="view_weighing_reception_tree">
+        <field name="name">weighing.reception.tree</field>
+        <field name="model">weighing.reception</field>
+        <field name="arch" type="xml">
+            <!--#Todo
+            Traduction No spanish-->
+            <tree string="Lista de Configuraciones">
+                <field name="name" />
+                <field name="state" optional="show" />
+                <field name="farmer_id" optional="show" />
+                <field name="supplier_id" optional="show" />
+                <field name="vehicle_license_plate" optional="show" />
+                <field name="driver_id" optional="show" />
+                <field name="datetime_in" optional="show" />
+                <field name="datetime_out" optional="show" />
+                <field name="employee_id" optional="show" />
+                <field name="uom_id" optional="show" />
+                <field name="input_weight" optional="show" />
+                <field name="output_weight" optional="show" />
+                <field name="product_weight" optional="show" />
+                <field name="product_id" optional="show" />
+                <field name="qty" optional="show" />
+                <field name="product_uom_id" optional="show" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_weighing_reception_form" model="ir.ui.view">
+        <field name="name">weighing.reception.form</field>
+        <field name="model">weighing.reception</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_out"
+                        string="Entrar"
+                        type="object"
+                        attrs="{'invisible': [('state', 'not in', ['in'])]}"
+                    />
+                    <button
+                        name="action_selection"
+                        type="object"
+                        string="Selection"
+                        attrs="{'invisible': [('state', 'not in', 'out')]}"
+                    />
+
+                    <button
+                        name="action_received"
+                        string="Recibir"
+                        type="object"
+                        attrs="{'invisible': [('state', 'not in', ['out'])]}"
+                    />
+                    <button
+                        name="action_transfer"
+                        string="Crear Transferencia"
+                        type="object"
+                        attrs="{
+                            'invisible': [
+                                '|',
+                                ('state', 'not in', ['received']), 
+                                ('transfer_count', '&gt;', 0)
+                            ]
+                        }"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="in,out,selection,received"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_transfer"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('transfer_count', '=', 0)]}"
+                        >
+                            <field
+                                name="transfer_count"
+                                widget="statinfo"
+                                string="Transferencias"
+                            />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label
+                            for="name"
+                            string="Número"
+                            style="color:#c8c8c8"
+                        />
+                        <h1 class="mt0">
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group string="Datos generales">
+                        <group>
+                            <field
+                                name="farmer_id"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="supplier_id"
+                                domain="[('supplier_rank', '>', 0)]"
+                                context="{'default_supplier_rank': 1}"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="vehicle_license_plate"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="driver_id"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="datetime_in"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="datetime_out"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'out')], 
+                                    'required': [('state','=','out')]
+                                }"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="employee_id"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="uom_id"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="input_weight"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="output_weight"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'out')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="product_weight"
+                                attrs="{'required': [('state','=','out')]}"
+                            />
+                            <field
+                                name="no_countable_desc"
+                                attrs="{'invisible': [('state', 'not in', 'selection')]}"
+                            />
+                            <field
+                                name="weight_basket"
+                                attrs="{'invisible': [('state', 'not in', 'selection')]}"
+                                widget="boolean_toggle"
+                            />
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Datos del producto">
+                            <field name="product_category_id" />
+                            <field
+                                name="product_id"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="product_name"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="product_uom_id"
+                                attrs="{
+                                    'readonly': [('state', 'not in', ['out','received'])], 
+                                    'required': [('state','=','out')]
+                                }"
+                            />
+                            <field
+                                name="qty"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'out')], 
+                                    'required': [('state','=','out')]
+                                }"
+                            />
+                        </group>
+                        <group string="Datos para transferencia">
+                            <field name="active" invisible="1" />
+                            <field
+                                name="location_id"
+                                attrs="{'required': [('state', '=', 'received')]}"
+                            />
+                            <field
+                                name="location_dest_id"
+                                attrs="{'required': [('state', '=', 'received')]}"
+                            />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Todo:
+    Configuration action-->
+    <record model="ir.actions.act_window" id="action_weighing_reception">
+        <field name="name">Recepción</field>
+        <field name="res_model">weighing.reception</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea una nueva recepción de peso
+            </p>
+        </field>
+    </record>
+
+    <!--Todo:
+    Configuration Menú-->
+    <menuitem
+        id="menu_purchase_weighing_reception"
+        action="action_weighing_reception"
+        parent="purchase.menu_procurement_management"
+        sequence="1"
+    />
+
+    <menuitem
+        action="purchase.purchase_rfq"
+        id="purchase.menu_purchase_rfq"
+        parent="purchase.menu_procurement_management"
+        sequence="3"
+    />
+
+</odoo>
