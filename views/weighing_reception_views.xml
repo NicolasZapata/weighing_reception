@@ -44,14 +44,13 @@
                         name="action_selection"
                         type="object"
                         string="Selection"
-                        attrs="{'invisible': [('state', 'not in', 'out')]}"
+                        attrs="{'invisible': [('state', 'not in', ['out'])]}"
                     />
-
                     <button
                         name="action_received"
                         string="Recibir"
                         type="object"
-                        attrs="{'invisible': [('state', 'not in', ['out'])]}"
+                        attrs="{'invisible': [('state', 'not in', ['selection'])]}"
                     />
                     <button
                         name="action_transfer"
@@ -100,6 +99,20 @@
                     <group string="Datos generales">
                         <group>
                             <field
+                                name="datetime_in"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
+                                }"
+                            />
+                            <field
+                                name="datetime_out"
+                                attrs="{
+                                    'readonly': [('state', '!=', 'out')], 
+                                    'required': [('state','=','out')]
+                                }"
+                            />
+                            <field
                                 name="farmer_id"
                                 attrs="{
                                     'readonly': [('state', '!=', 'in')], 
@@ -127,20 +140,6 @@
                                 attrs="{
                                     'readonly': [('state', '!=', 'in')], 
                                     'required': [('state','=','in')]
-                                }"
-                            />
-                            <field
-                                name="datetime_in"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
-                                }"
-                            />
-                            <field
-                                name="datetime_out"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'out')], 
-                                    'required': [('state','=','out')]
                                 }"
                             />
                         </group>
@@ -174,23 +173,48 @@
                                 }"
                             />
                             <field
-                                name="product_weight"
-                                attrs="{'required': [('state','=','out')]}"
-                            />
-                            <field
-                                name="no_countable_desc"
-                                attrs="{'invisible': [('state', 'not in', 'selection')]}"
-                            />
-                            <field
                                 name="weight_basket"
                                 attrs="{'invisible': [('state', 'not in', 'selection')]}"
                                 widget="boolean_toggle"
                             />
                         </group>
                     </group>
+                    <group
+                        attrs="{
+                            'invisible': [
+                                '|',
+                                ('state', 'not in', ['selection', 'received']),
+                                ('weight_basket', '=', False)
+                            ]
+                        }"
+                        name="Canastillas"
+                        string="Canastillas"
+                    >
+                        <group>
+                            <field
+                                name="product_weight"
+                                attrs="{'required': [('state','=',['out'])]}"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="no_countable_desc"
+                                attrs="{
+                                    'invisible': [('state', 'not in', 'selection')],
+                                    'required': [('weight_basket', '=', True)]
+                                }"
+                            />
+                        </group>
+                    </group>
                     <group>
                         <group string="Datos del producto">
-                            <field name="product_category_id" />
+                            <field
+                                name="categ_id"
+                                attrs="{
+                                    'readonly': [('state', '!=', ['in'])],
+                                    'required': [('state', '=', ['in'])]
+                                }"
+                            />
                             <field
                                 name="product_id"
                                 attrs="{

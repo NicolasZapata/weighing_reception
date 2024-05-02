@@ -2,6 +2,7 @@
 from odoo import api, fields, models, _, tools
 from odoo.exceptions import UserError, ValidationError
 
+# State definitions list
 _STATES = [
     ("in", "Entrada"),
     ("out", "Salida"),
@@ -29,7 +30,12 @@ class WeighingReception(models.Model):
     employee_id = fields.Many2one("hr.employee", string="Receptor")
     transfer_ids = fields.Many2many("stock.picking", string="Entrada")
     transfer_count = fields.Integer(compute="_compute_transfer_count")
-    uom_id = fields.Many2one("uom.uom", string="Unidad de medida")
+    uom_id = fields.Many2one(
+        "uom.uom",
+        string="Unidad de medida",
+        compute="_onchange_uom",
+        store=True,
+    )
     input_weight = fields.Float(string="Peso de entrada del vehículo")
     output_weight = fields.Float(string="Peso de salida del vehículo")
     product_weight = fields.Float(
@@ -42,27 +48,73 @@ class WeighingReception(models.Model):
     product_id = fields.Many2one(
         "product.product",
         string="Producto",
-        domain="[('categ_id', '=', 'product_category_id')]",
         help="Producto (Se usa para filtrar los productos)",
     )
-    product_category_id = fields.Many2one(
+    categ_id = fields.Many2one(
         "product.category",
         string="Categoría del Producto",
         help="Categoría del producto (Se usa para filtrar los productos por su categoría)",
     )
     product_name = fields.Char("Descripción")
     qty = fields.Float(string="Cantidad")
-    product_uom_id = fields.Many2one("uom.uom", string="Medida")
+    product_uom_id = fields.Many2one(
+        "uom.uom",
+        string="Medida",
+        compute="_onchange_uom",
+        store=True,
+    )
     location_id = fields.Many2one(
         "stock.location",
         "Locación origen",
     )
     location_dest_id = fields.Many2one("stock.location", "Locación destino")
-    no_countable_desc = fields.Float(string="Descontar el producto no contable")
+    no_countable_desc = fields.Float(string="Descontar el producto no conforme")
     weight_basket = fields.Boolean(string="Descontar Canastillas")
+
+    @api.onchange("product_id")
+    def _onchange_product_id(self):
+        """
+        This function is an onchange method that is triggered when 
+        the value of the "product_id" field is changed.  It updates 
+        the domain of the "categ_id" field based on the selected "product_id".
+
+        :return: A dictionary containing the updated domain for the "categ_id" field.
+        :rtype: dict
+        """
+        for record in self:
+            return {
+                "domain": {
+                    "categ_id": [("product_id", "in", record.categ_id.id)],
+                }
+            }
+
+    @api.depends("uom_id", "product_uom_id")
+    def _onchange_uom(self):
+        """
+        Define a domain for uom_id field with the category of the product.
+
+        This function is an onchange method that is triggered when the value 
+        of the "uom_id" or "product_uom_id" field is changed. It updates the 
+        domain of the "uom_id" and "product_uom_id" fields based on the 
+        selected values.
+
+        Parameters:
+            self (RecordSet): The current recordset.
+
+        Returns:
+            None
+        """
+        self.ensure_one()
+        if self.uom_id:
+            self.product_uom_id = self.uom_id
+        if self.product_uom_id:
+            self.uom_id = self.product_uom_id
 
     @api.model
     def create(self, vals):
+        """
+        Create a new Weighing Reception with a sequence number.
+        """
         vals.update(
             name=self.env["ir.sequence"].next_by_code("weighting.reception") or _("New")
         )
@@ -70,6 +122,12 @@ class WeighingReception(models.Model):
 
     @api.onchange("product_id")
     def _onchange_product_id(self):
+        """
+        On change method triggered when the product_id field is modified.
+
+        :param self: The current WeighingReception object.
+        :return: None
+        """
         for record in self:
             if record.product_id:
                 record.product_name = record.product_id.name
@@ -78,18 +136,42 @@ class WeighingReception(models.Model):
 
     @api.depends("input_weight", "output_weight")
     def _compute_product_weight(self):
+        """
+        Compute the weight of the product based on the difference 
+        between input and output weights.
+
+        This method is triggered whenever the values of the 
+        "input_weight" or "output_weight" fields change. It updates 
+        the "product_weight" field with the computed weight.
+
+        :param self: The current WeighingReception object.
+        :return: None
+        """
         for record in self:
+            # Initialize the product weight to 0.0
             product_weight = 0.0
+            # Check if both input and output weights are present
             if record.input_weight and record.output_weight:
+                # Calculate the difference between input and output weights
                 product_weight = record.input_weight - record.output_weight
+            # Update the "product_weight" field with the computed weight
             record.product_weight = product_weight
 
     @api.depends("transfer_ids")
     def _compute_transfer_count(self):
+        """
+        Compute the number of transfers.
+        """
         for record in self:
             record.transfer_count = len(record.transfer_ids.ids)
 
     def action_view_transfer(self):
+        """
+        Generates an action to view the transfers.
+
+        :return: A dictionary representing the action to view the transfers.
+        :rtype: dict
+        """
         self.ensure_one()
         action = {
             "name": _("Transferencias"),
@@ -113,6 +195,8 @@ class WeighingReception(models.Model):
             )
         return action
 
+    # State Actions
+
     def action_out(self):
         self.ensure_one()
         self.state = "out"
@@ -126,6 +210,13 @@ class WeighingReception(models.Model):
         self.state = "received"
 
     def action_transfer(self):
+        """
+        Creates a stock picking for transferring goods from a location to another.
+
+        :return: The created stock picking.
+        :rtype: stock.picking
+        :raises: ValidationError if an error occurs during the creation of the stock picking.
+        """
         self.ensure_one()
         vals = {
             #'name': 'Incoming picking (negative product)',
@@ -155,5 +246,8 @@ class WeighingReception(models.Model):
             raise ValidationError(_(e))
 
     def action_print(self):
+        """
+        A description of the entire function, its parameters, and its return types.
+        """
         self.ensure_one()
         pass
