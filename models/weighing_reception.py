@@ -63,19 +63,74 @@ class WeighingReception(models.Model):
         compute="_onchange_uom",
         store=True,
     )
+    basket_uom_id = fields.Many2one("uom.uom", string="Medida de Canastilla")
+    not_countable_uom_id = fields.Many2one("uom.uom", string="Medida de producto no conforme")
     location_id = fields.Many2one(
         "stock.location",
         "Locación origen",
     )
+    order_ids = fields.One2many(
+        "purchase.order",
+        "weighing_reception_id",
+        string="Ordenes de compra",
+    )
+    purchase_order_counts = fields.Integer(
+        compute="_compute_orders_counts", string="Ordenes de venta"
+    )
     location_dest_id = fields.Many2one("stock.location", "Locación destino")
-    no_countable_desc = fields.Float(string="Descontar el producto no conforme")
+    no_countable_desc = fields.Float(string="Producto no conforme")
     weight_basket = fields.Boolean(string="Descontar Canastillas")
+    weighing_reception_id = fields.Many2one("weighing.reception", string="Recepción")
+    reception_ids = fields.One2many(
+        "weighing.reception",
+        "weighing_reception_id",
+        string="Recepciones",
+    )
+    reception_counts = fields.Integer(
+        compute="_compute_reception_counts", string="Recepciones"
+    )
+
+    # Stat buttons and stat info counts
+
+    def _compute_orders_counts(self):
+        for rec in self:
+            purchase_order_counts = self.env["purchase.order"].search_count(
+                [("id", "=", rec.order_ids.ids)]
+            )
+            rec.purchase_order_counts = purchase_order_counts
+
+    def action_open_orders(self):
+        self.ensure_one()
+        return {
+            "name": _("Purchases"),
+            "type": "ir.actions.act_window",
+            "view_mode": "list,form",
+            "res_model": "purchase.order",
+            "domain": [("id", "in", self.order_ids.ids)],
+        }
+
+    def _compute_reception_counts(self):
+        for rec in self:
+            reception_counts = self.env["weighing.reception"].search_count(
+                [("id", "=", rec.reception_ids.ids)]
+            )
+            rec.reception_counts = reception_counts
+
+    def action_open_receptions(self):
+        self.ensure_one()
+        return {
+            "name": _("Receptions"),
+            "type": "ir.actions.act_window",
+            "view_mode": "list,form",
+            "res_model": "weighing.reception",
+            "domain": [("id", "in", self.reception_ids.ids)],
+        }
 
     @api.onchange("product_id")
     def _onchange_product_id(self):
         """
-        This function is an onchange method that is triggered when 
-        the value of the "product_id" field is changed.  It updates 
+        This function is an onchange method that is triggered when
+        the value of the "product_id" field is changed.  It updates
         the domain of the "categ_id" field based on the selected "product_id".
 
         :return: A dictionary containing the updated domain for the "categ_id" field.
@@ -93,9 +148,9 @@ class WeighingReception(models.Model):
         """
         Define a domain for uom_id field with the category of the product.
 
-        This function is an onchange method that is triggered when the value 
-        of the "uom_id" or "product_uom_id" field is changed. It updates the 
-        domain of the "uom_id" and "product_uom_id" fields based on the 
+        This function is an onchange method that is triggered when the value
+        of the "uom_id" or "product_uom_id" field is changed. It updates the
+        domain of the "uom_id" and "product_uom_id" fields based on the
         selected values.
 
         Parameters:
@@ -137,11 +192,11 @@ class WeighingReception(models.Model):
     @api.depends("input_weight", "output_weight")
     def _compute_product_weight(self):
         """
-        Compute the weight of the product based on the difference 
+        Compute the weight of the product based on the difference
         between input and output weights.
 
-        This method is triggered whenever the values of the 
-        "input_weight" or "output_weight" fields change. It updates 
+        This method is triggered whenever the values of the
+        "input_weight" or "output_weight" fields change. It updates
         the "product_weight" field with the computed weight.
 
         :param self: The current WeighingReception object.

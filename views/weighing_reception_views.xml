@@ -85,6 +85,30 @@
                                 string="Transferencias"
                             />
                         </button>
+                        <button
+                            name="action_open_receptions"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                            attrs="{'invisible': [('reception_counts', '=', 0)]}"
+                        >
+                            <field
+                                name="reception_counts"
+                                widget="statinfo"
+                            />
+                        </button>
+                        <button
+                            name="action_open_orders"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-first-order"
+                            attrs="{'invisible': [('purchase_order_counts', '=', 0)]}"
+                        >
+                            <field
+                                name="purchase_order_counts"
+                                widget="statinfo"
+                            />
+                        </button>
                     </div>
                     <div class="oe_title">
                         <label
@@ -173,8 +197,12 @@
                                 }"
                             />
                             <field
+                                name="product_weight"
+                                attrs="{'required': [('state','=',['out'])]}"
+                            />
+                            <field
                                 name="weight_basket"
-                                attrs="{'invisible': [('state', 'not in', 'selection')]}"
+                                attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
                                 widget="boolean_toggle"
                             />
                         </group>
@@ -190,18 +218,41 @@
                         name="Canastillas"
                         string="Canastillas"
                     >
-                        <group>
-                            <field
-                                name="product_weight"
-                                attrs="{'required': [('state','=',['out'])]}"
-                            />
-                        </group>
-                        <group>
+                        <group
+                            name="product_info"
+                            string="Información del producto de canastilla"
+                        >
                             <field
                                 name="no_countable_desc"
                                 attrs="{
-                                    'invisible': [('state', 'not in', 'selection')],
+                                    'invisible': [('state', 'not in', ['selection', 'received'])],
                                     'required': [('weight_basket', '=', True)]
+                                }"
+                            />
+                            <field
+                                name="qty"
+                                attrs="{
+                                    'readonly': [('state', 'not in', ['selection', 'received'])], 
+                                    'required': [('weight_basket', '=', True)]
+                                }"
+                            />
+                        </group>
+                        <group 
+                            name="medidas"
+                            string="Medidas"
+                        >
+                            <field
+                                name="basket_uom_id"
+                                attrs="{
+                                    'readonly': [('state', 'not in', ['out','received'])], 
+                                    'required': [('state','=','selection')]
+                                }"
+                            />
+                            <field
+                                name="not_countable_uom_id"
+                                attrs="{
+                                    'readonly': [('state', 'not in', ['out','received'])], 
+                                    'required': [('state','=','out')]
                                 }"
                             />
                         </group>
@@ -211,8 +262,8 @@
                             <field
                                 name="categ_id"
                                 attrs="{
-                                    'readonly': [('state', '!=', ['in'])],
-                                    'required': [('state', '=', ['in'])]
+                                    'readonly': [('state', '!=', 'in')], 
+                                    'required': [('state','=','in')]
                                 }"
                             />
                             <field
@@ -236,13 +287,7 @@
                                     'required': [('state','=','out')]
                                 }"
                             />
-                            <field
-                                name="qty"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'out')], 
-                                    'required': [('state','=','out')]
-                                }"
-                            />
+
                         </group>
                         <group string="Datos para transferencia">
                             <field name="active" invisible="1" />
