@@ -152,7 +152,7 @@ class WeighingReception(models.Model):
             else:
                 record.product_name = False
 
-    @api.depends("input_weight", "output_weight")
+    @api.depends("input_weight", "output_weight", "no_countable_desc", "qty")
     def _compute_product_weight(self):
         """
         Compute the weight of the product based on the difference
