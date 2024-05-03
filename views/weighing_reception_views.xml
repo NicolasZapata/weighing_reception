@@ -218,10 +218,7 @@
                         name="Canastillas"
                         string="Canastillas"
                     >
-                        <group
-                            name="product_info"
-                            string="Información del producto de canastilla"
-                        >
+                        <group>
                             <field
                                 name="no_countable_desc"
                                 attrs="{
@@ -237,10 +234,7 @@
                                 }"
                             />
                         </group>
-                        <group 
-                            name="medidas"
-                            string="Medidas"
-                        >
+                        <group>
                             <field
                                 name="basket_uom_id"
                                 attrs="{

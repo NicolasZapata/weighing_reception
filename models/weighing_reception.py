@@ -56,7 +56,7 @@ class WeighingReception(models.Model):
         help="Categoría del producto (Se usa para filtrar los productos por su categoría)",
     )
     product_name = fields.Char("Descripción")
-    qty = fields.Float(string="Cantidad")
+    qty = fields.Float(string="Cantidad de canastillas")
     product_uom_id = fields.Many2one(
         "uom.uom",
         string="Medida",
