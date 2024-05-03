@@ -54,7 +54,7 @@
                     />
                     <button
                         name="action_transfer"
-                        string="Crear Transferencia"
+                        string="Crear Compra"
                         type="object"
                         attrs="{
                             'invisible': [
@@ -282,7 +282,6 @@
                                     'required': [('state','=','out')]
                                 }"
                             />
-
                         </group>
                         <group string="Datos para transferencia">
                             <field name="active" invisible="1" />
