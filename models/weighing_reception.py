@@ -126,23 +126,6 @@ class WeighingReception(models.Model):
             "domain": [("id", "in", self.reception_ids.ids)],
         }
 
-    @api.onchange("product_id")
-    def _onchange_product_id(self):
-        """
-        This function is an onchange method that is triggered when
-        the value of the "product_id" field is changed.  It updates
-        the domain of the "categ_id" field based on the selected "product_id".
-
-        :return: A dictionary containing the updated domain for the "categ_id" field.
-        :rtype: dict
-        """
-        for record in self:
-            return {
-                "domain": {
-                    "categ_id": [("product_id", "in", record.categ_id.id)],
-                }
-            }
-
     @api.depends("uom_id", "product_uom_id")
     def _onchange_uom(self):
         """

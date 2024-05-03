@@ -266,6 +266,7 @@
                                     'readonly': [('state', '!=', 'in')], 
                                     'required': [('state','=','in')]
                                 }"
+                                domain="[('categ_id', '=', categ_id)]"
                             />
                             <field
                                 name="product_name"
