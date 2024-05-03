@@ -48,13 +48,27 @@
                     optional="show"
                     widget="many2one_avatar_employee"
                 />
-                <field name="vehicle_uom_id" optional="show" />
+                <field
+                    name="vehicle_uom_id"
+                    optional="show"
+                    decoration-bf="True"
+                    decoration-it="True"
+                />
                 <field name="input_weight" optional="show" />
                 <field name="output_weight" optional="show" />
                 <field name="product_weight" optional="show" />
-                <field name="product_id" optional="show" />
+                <field
+                    name="product_id"
+                    optional="show"
+                    decoration-bf="True"
+                />
                 <field name="qty" optional="show" />
-                <field name="product_uom_id" optional="show" />
+                <field
+                    name="product_uom_id"
+                    optional="show"
+                    decoration-bf="True"
+                    decoration-it="True"
+                />
             </tree>
         </field>
     </record>
@@ -327,6 +341,11 @@
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </form>
         </field>
     </record>
