@@ -262,6 +262,8 @@
                         </group>
                     </group>
                     <group
+                        name="product_discount"
+                        string="Descuento del producto"
                         attrs="{
                             'invisible': [
                                 '|',
@@ -269,8 +271,6 @@
                                 ('discount_product', '=', False)
                             ]
                         }"
-                        name="product_discount"
-                        string="Descuento del producto"
                     >
                         <group>
                             <field
@@ -282,16 +282,29 @@
                             />
                         </group>
                         <group>
-                            <field
-                                name="not_countable_uom_id"
-                                attrs="{
-                                    'readonly': [('state', 'not in', ['out','selection'])], 
-                                    'required': [('weight_basket', '=', True)]
-                                }"
-                            />
+                            <label for="not_countable_weight"/>
+                            <div>
+                                <field
+                                    name="not_countable_weight"
+                                    attrs="{
+                                        'readonly': [('state', 'not in', ['out','selection'])], 
+                                        'required': [('weight_basket', '=', True)]
+                                    }"
+                                    class="oe_inline"
+                                />
+                                <field
+                                    name="basket_uom_name"
+                                    attrs="{
+                                        'required': [('weight_basket', '=', True)]
+                                    }"
+                                    class="oe_inline"
+                                />
+                            </div>
                         </group>
                     </group>
                     <group
+                        name="Canastillas"
+                        string="Canastillas"
                         attrs="{
                             'invisible': [
                                 '|',
@@ -299,8 +312,6 @@
                                 ('weight_basket', '=', False)
                             ]
                         }"
-                        name="Canastillas"
-                        string="Canastillas"
                     >
                         <group>
                             <field
@@ -312,13 +323,25 @@
                             />
                         </group>
                         <group>
-                            <field
-                                name="basket_uom_id"
-                                attrs="{
-                                    'readonly': [('state', 'not in', ['out','selection'])], 
-                                    'required': [('state','=','selection')]
-                                }"
-                            />
+                            <label for="basket_product_weight" />
+                            <div>
+                                <field
+                                    name="basket_product_weight"
+                                    attrs="{
+                                        'readonly': [('state', 'not in', ['out','selection'])], 
+                                        'required': [('weight_basket', '=', True)]
+                                    }"
+                                    class="oe_inline"
+                                />
+                                <field
+                                    name="basket_uom_name"
+                                    attrs="{
+                                        'required': [('weight_basket', '=', True)]
+                                    }"
+                                    class="oe_inline"
+                                    placeholder="Agregar Medida. Por ejemplo: kg"
+                                />
+                            </div>
                         </group>
                     </group>
                     <group>

@@ -55,17 +55,32 @@ class WeighingReception(models.Model):
         help="Categoría del producto (Se usa para filtrar los productos por su categoría)",
     )
     product_name = fields.Char("Descripción")
-    qty = fields.Float(string="Cantidad de canastillas")
     product_uom_id = fields.Many2one(
         "uom.uom",
         string="Medida del producto",
         related="product_id.uom_id",
         store=True,
     )
-    basket_uom_id = fields.Many2one("uom.uom", string="Medida de Canastilla")
-    not_countable_uom_id = fields.Many2one(
-        "uom.uom", string="Medida de producto no conforme"
+    # basket | canastillas -----------------------------------------------------------------------------
+    qty = fields.Float(string="Cantidad de canastillas")
+    basket_uom_name = fields.Char(
+        string="Medida de Canastilla",
+        related="product_id.weight_uom_name",
     )
+    basket_product_weight = fields.Float(
+        string="Peso de canastillas", related="product_id.weight"
+    )
+    weight_basket = fields.Boolean(string="Descontar Canastillas")
+    # ---------------------------------------------------------------------------------------------
+    # Not countable | Producto No Conforme -------------------------------------------------------
+    discount_product = fields.Boolean(string="Aplicar descuento del producto")
+    not_countable_weight = fields.Float(string="Peso de producto no conforme")
+    # not_countable_weight_uom_name = fields.Many2one(
+    #     string="Medida de producto no conforme",
+    #     related="product_id.weight_uom_name"
+    # )
+    no_countable_desc = fields.Float(string="Producto no conforme")
+    # ------------------------------------------------------------------------------------------------
     location_id = fields.Many2one(
         "stock.location",
         "Locación origen",
@@ -79,9 +94,6 @@ class WeighingReception(models.Model):
         compute="_compute_orders_counts", string="Ordenes de venta"
     )
     location_dest_id = fields.Many2one("stock.location", "Locación destino")
-    discount_product = fields.Boolean(string="Aplicar descuento del producto")
-    no_countable_desc = fields.Float(string="Producto no conforme")
-    weight_basket = fields.Boolean(string="Descontar Canastillas")
     weighing_reception_id = fields.Many2one("weighing.reception", string="Recepción")
     reception_ids = fields.One2many(
         "weighing.reception",
@@ -152,7 +164,14 @@ class WeighingReception(models.Model):
             else:
                 record.product_name = False
 
-    @api.depends("input_weight", "output_weight", "no_countable_desc", "qty")
+    @api.depends(
+        "input_weight",
+        "output_weight",
+        "no_countable_desc",
+        "qty",
+        "weight_basket",
+        "basket_product_weight",
+    )
     def _compute_product_weight(self):
         """
         Compute the weight of the product based on the difference
@@ -173,12 +192,11 @@ class WeighingReception(models.Model):
                 and record.no_countable_desc
                 and record.qty
             ):
-                product_weight = (
-                    record.input_weight
-                    - record.output_weight
-                    - record.no_countable_desc
-                    - record.qty
-                )
+                product_weight = record.input_weight - record.output_weight
+            elif record.weight_basket == True and record.basket_product_weight:
+                product_weight = product_weight * record.basket_product_weight
+            elif record.no_countable_desc == True and record.basket_product_weight:
+                product_weight = record.qty - record.no_countable_desc
             record.product_weight = product_weight
 
     @api.depends("transfer_ids")
