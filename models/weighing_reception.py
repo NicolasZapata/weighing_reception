@@ -63,7 +63,9 @@ class WeighingReception(models.Model):
         store=True,
     )
     basket_uom_id = fields.Many2one("uom.uom", string="Medida de Canastilla")
-    not_countable_uom_id = fields.Many2one("uom.uom", string="Medida de producto no conforme")
+    not_countable_uom_id = fields.Many2one(
+        "uom.uom", string="Medida de producto no conforme"
+    )
     location_id = fields.Many2one(
         "stock.location",
         "Locación origen",
@@ -77,6 +79,7 @@ class WeighingReception(models.Model):
         compute="_compute_orders_counts", string="Ordenes de venta"
     )
     location_dest_id = fields.Many2one("stock.location", "Locación destino")
+    discount_product = fields.Boolean(string="Aplicar descuento del producto")
     no_countable_desc = fields.Float(string="Producto no conforme")
     weight_basket = fields.Boolean(string="Descontar Canastillas")
     weighing_reception_id = fields.Many2one("weighing.reception", string="Recepción")
@@ -163,13 +166,19 @@ class WeighingReception(models.Model):
         :return: None
         """
         for record in self:
-            # Initialize the product weight to 0.0
             product_weight = 0.0
-            # Check if both input and output weights are present
-            if record.input_weight and record.output_weight:
-                # Calculate the difference between input and output weights
-                product_weight = record.input_weight - record.output_weight
-            # Update the "product_weight" field with the computed weight
+            if (
+                record.input_weight
+                and record.output_weight
+                and record.no_countable_desc
+                and record.qty
+            ):
+                product_weight = (
+                    record.input_weight
+                    - record.output_weight
+                    - record.no_countable_desc
+                    - record.qty
+                )
             record.product_weight = product_weight
 
     @api.depends("transfer_ids")

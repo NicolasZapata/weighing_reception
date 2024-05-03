@@ -187,6 +187,7 @@
                                     'readonly': [('state', '!=', 'in')], 
                                     'required': [('state','=','in')]
                                 }"
+                                widget="res_partner_many2one"
                             />
                             <field
                                 name="supplier_id"
@@ -196,6 +197,7 @@
                                     'readonly': [('state', '!=', 'in')], 
                                     'required': [('state','=','in')]
                                 }"
+                                widget="res_partner_many2one"
                             />
                             <field
                                 name="vehicle_license_plate"
@@ -210,6 +212,7 @@
                                     'readonly': [('state', '!=', 'in')], 
                                     'required': [('state','=','in')]
                                 }"
+                                widget="res_partner_many2one"
                             />
                         </group>
                         <group>
@@ -219,6 +222,7 @@
                                     'readonly': [('state', '!=', 'in')], 
                                     'required': [('state','=','in')]
                                 }"
+                                widget="many2one_avatar_employee"
                             />
                             <field
                                 name="vehicle_uom_id"
@@ -246,9 +250,44 @@
                                 attrs="{'required': [('state','=',['out'])]}"
                             />
                             <field
+                                name="discount_product"
+                                attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
+                                widget="boolean_toggle"
+                            />
+                            <field
                                 name="weight_basket"
                                 attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
                                 widget="boolean_toggle"
+                            />
+                        </group>
+                    </group>
+                    <group
+                        attrs="{
+                            'invisible': [
+                                '|',
+                                ('state', 'not in', ['selection', 'received']),
+                                ('discount_product', '=', False)
+                            ]
+                        }"
+                        name="product_discount"
+                        string="Descuento del producto"
+                    >
+                        <group>
+                            <field
+                                name="no_countable_desc"
+                                attrs="{
+                                    'invisible': [('state', 'not in', ['selection', 'received'])],
+                                    'required': [('weight_basket', '=', True)]
+                                }"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="not_countable_uom_id"
+                                attrs="{
+                                    'readonly': [('state', 'not in', ['out','selection'])], 
+                                    'required': [('weight_basket', '=', True)]
+                                }"
                             />
                         </group>
                     </group>
@@ -265,13 +304,6 @@
                     >
                         <group>
                             <field
-                                name="no_countable_desc"
-                                attrs="{
-                                    'invisible': [('state', 'not in', ['selection', 'received'])],
-                                    'required': [('weight_basket', '=', True)]
-                                }"
-                            />
-                            <field
                                 name="qty"
                                 attrs="{
                                     'readonly': [('state', 'not in', ['selection', 'received'])], 
@@ -285,13 +317,6 @@
                                 attrs="{
                                     'readonly': [('state', 'not in', ['out','selection'])], 
                                     'required': [('state','=','selection')]
-                                }"
-                            />
-                            <field
-                                name="not_countable_uom_id"
-                                attrs="{
-                                    'readonly': [('state', 'not in', ['out','selection'])], 
-                                    'required': [('weight_basket', '=', True)]
                                 }"
                             />
                         </group>
