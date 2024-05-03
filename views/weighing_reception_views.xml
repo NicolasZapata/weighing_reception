@@ -249,16 +249,18 @@
                                 name="product_weight"
                                 attrs="{'required': [('state','=',['out'])]}"
                             />
-                            <field
-                                name="discount_product"
-                                attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
-                                widget="boolean_toggle"
-                            />
-                            <field
-                                name="weight_basket"
-                                attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
-                                widget="boolean_toggle"
-                            />
+                        </group>
+                    </group>
+                    <group
+                        name="checkers"
+                        attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
+                        string="Habilitar Descuentos no contables y descuentos de canastillas"
+                    >
+                        <group>
+                            <field name="discount_product" widget="boolean_toggle" />
+                        </group>
+                        <group>
+                            <field name="weight_basket" widget="boolean_toggle" />
                         </group>
                     </group>
                     <group
@@ -272,35 +274,24 @@
                             ]
                         }"
                     >
-                        <group>
+                        <label for="not_countable_weight" />
+                        <div>
                             <field
-                                name="no_countable_desc"
+                                name="not_countable_weight"
                                 attrs="{
-                                    'invisible': [('state', 'not in', ['selection', 'received'])],
-                                    'required': [('weight_basket', '=', True)]
-                                }"
-                            />
-                        </group>
-                        <group>
-                            <label for="not_countable_weight"/>
-                            <div>
-                                <field
-                                    name="not_countable_weight"
-                                    attrs="{
                                         'readonly': [('state', 'not in', ['out','selection'])], 
                                         'required': [('weight_basket', '=', True)]
                                     }"
-                                    class="oe_inline"
-                                />
-                                <field
-                                    name="basket_uom_name"
-                                    attrs="{
+                                class="oe_inline"
+                            />
+                            <field
+                                name="not_countable_weight_uom_name"
+                                attrs="{
                                         'required': [('weight_basket', '=', True)]
                                     }"
-                                    class="oe_inline"
-                                />
-                            </div>
-                        </group>
+                                class="oe_inline"
+                            />
+                        </div>
                     </group>
                     <group
                         name="Canastillas"
@@ -320,6 +311,14 @@
                                     'readonly': [('state', 'not in', ['selection', 'received'])], 
                                     'required': [('weight_basket', '=', True)]
                                 }"
+                            />
+                            <field
+                                name="basket_product_id"
+                                attrs="{
+                                    'readonly': [('state', 'not in', ['out','selection'])], 
+                                    'required': [('weight_basket', '=', True)]
+                                }"
+                                domain="[('available_in_stock', '=', True)]"
                             />
                         </group>
                         <group>

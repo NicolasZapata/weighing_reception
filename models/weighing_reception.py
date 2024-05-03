@@ -65,20 +65,23 @@ class WeighingReception(models.Model):
     qty = fields.Float(string="Cantidad de canastillas")
     basket_uom_name = fields.Char(
         string="Medida de Canastilla",
-        related="product_id.weight_uom_name",
+        related="basket_product_id.weight_uom_name",
     )
     basket_product_weight = fields.Float(
-        string="Peso de canastillas", related="product_id.weight"
+        string="Peso de canastillas", related="basket_product_id.weight"
     )
     weight_basket = fields.Boolean(string="Descontar Canastillas")
+    basket_product_id = fields.Many2one(
+        "product.product", string="Producto de Canastilla"
+    )
     # ---------------------------------------------------------------------------------------------
     # Not countable | Producto No Conforme -------------------------------------------------------
     discount_product = fields.Boolean(string="Aplicar descuento del producto")
     not_countable_weight = fields.Float(string="Peso de producto no conforme")
-    # not_countable_weight_uom_name = fields.Many2one(
-    #     string="Medida de producto no conforme",
-    #     related="product_id.weight_uom_name"
-    # )
+    not_countable_weight_uom_name = fields.Char(
+        string="Medida de producto no conforme",
+        related="product_id.weight_uom_name"
+    )
     no_countable_desc = fields.Float(string="Producto no conforme")
     # ------------------------------------------------------------------------------------------------
     location_id = fields.Many2one(
@@ -189,13 +192,12 @@ class WeighingReception(models.Model):
             if (
                 record.input_weight
                 and record.output_weight
-                and record.no_countable_desc
-                and record.qty
             ):
                 product_weight = record.input_weight - record.output_weight
-            elif record.weight_basket == True and record.basket_product_weight:
-                product_weight = product_weight * record.basket_product_weight
-            elif record.no_countable_desc == True and record.basket_product_weight:
+            if record.weight_basket == True and record.basket_product_weight:
+                multi_pw = product_weight * record.basket_product_weight
+                product_weight = multi_pw
+            if record.no_countable_desc == True and record.basket_product_weight:
                 product_weight = record.qty - record.no_countable_desc
             record.product_weight = product_weight
 

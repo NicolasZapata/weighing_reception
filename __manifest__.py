@@ -13,6 +13,7 @@
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
         'views/weighing_reception_views.xml',
+        'views/product_template_view.xml',
         'report/weighing_reception_report.xml',
     ],
     'installable': True,
