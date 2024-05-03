@@ -30,10 +30,9 @@ class WeighingReception(models.Model):
     employee_id = fields.Many2one("hr.employee", string="Receptor")
     transfer_ids = fields.Many2many("stock.picking", string="Entrada")
     transfer_count = fields.Integer(compute="_compute_transfer_count")
-    uom_id = fields.Many2one(
+    vehicle_uom_id = fields.Many2one(
         "uom.uom",
-        string="Unidad de medida",
-        compute="_onchange_uom",
+        string="Unidad de medida del vehículo",
         store=True,
     )
     input_weight = fields.Float(string="Peso de entrada del vehículo")
@@ -59,8 +58,8 @@ class WeighingReception(models.Model):
     qty = fields.Float(string="Cantidad de canastillas")
     product_uom_id = fields.Many2one(
         "uom.uom",
-        string="Medida",
-        compute="_onchange_uom",
+        string="Medida del producto",
+        related="product_id.uom_id",
         store=True,
     )
     basket_uom_id = fields.Many2one("uom.uom", string="Medida de Canastilla")
@@ -125,28 +124,6 @@ class WeighingReception(models.Model):
             "res_model": "weighing.reception",
             "domain": [("id", "in", self.reception_ids.ids)],
         }
-
-    @api.depends("uom_id", "product_uom_id")
-    def _onchange_uom(self):
-        """
-        Define a domain for uom_id field with the category of the product.
-
-        This function is an onchange method that is triggered when the value
-        of the "uom_id" or "product_uom_id" field is changed. It updates the
-        domain of the "uom_id" and "product_uom_id" fields based on the
-        selected values.
-
-        Parameters:
-            self (RecordSet): The current recordset.
-
-        Returns:
-            None
-        """
-        self.ensure_one()
-        if self.uom_id:
-            self.product_uom_id = self.uom_id
-        if self.product_uom_id:
-            self.uom_id = self.product_uom_id
 
     @api.model
     def create(self, vals):

@@ -8,16 +8,47 @@
             <!--#Todo
             Traduction No spanish-->
             <tree string="Lista de Configuraciones">
-                <field name="name" />
-                <field name="state" optional="show" />
-                <field name="farmer_id" optional="show" />
-                <field name="supplier_id" optional="show" />
-                <field name="vehicle_license_plate" optional="show" />
-                <field name="driver_id" optional="show" />
+                <field
+                    name="name"
+                    decoration-bf="True"
+                />
+                <field
+                    name="state"
+                    optional="show"
+                    widget="badge"
+                    decoration-success="state == 'received'"
+                    decoration-warning="state == 'out'"
+                    decoration-info="state == 'selection'"
+                />
+                <field
+                    name="farmer_id"
+                    optional="show"
+                    widget="res_partner_many2one"
+                />
+                <field
+                    name="supplier_id"
+                    optional="show"
+                    widget="res_partner_many2one"
+                />
+                <field
+                    name="vehicle_license_plate"
+                    optional="show"
+                    decoration-bf="True"
+                    decoration-it="True"
+                />
+                <field
+                    name="driver_id"
+                    optional="show"
+                    widget="res_partner_many2one"
+                />
                 <field name="datetime_in" optional="show" />
                 <field name="datetime_out" optional="show" />
-                <field name="employee_id" optional="show" />
-                <field name="uom_id" optional="show" />
+                <field
+                    name="employee_id"
+                    optional="show"
+                    widget="many2one_avatar_employee"
+                />
+                <field name="vehicle_uom_id" optional="show" />
                 <field name="input_weight" optional="show" />
                 <field name="output_weight" optional="show" />
                 <field name="product_weight" optional="show" />
@@ -176,7 +207,7 @@
                                 }"
                             />
                             <field
-                                name="uom_id"
+                                name="vehicle_uom_id"
                                 attrs="{
                                     'readonly': [('state', '!=', 'in')], 
                                     'required': [('state','=','in')]
@@ -238,15 +269,15 @@
                             <field
                                 name="basket_uom_id"
                                 attrs="{
-                                    'readonly': [('state', 'not in', ['out','received'])], 
+                                    'readonly': [('state', 'not in', ['out','selection'])], 
                                     'required': [('state','=','selection')]
                                 }"
                             />
                             <field
                                 name="not_countable_uom_id"
                                 attrs="{
-                                    'readonly': [('state', 'not in', ['out','received'])], 
-                                    'required': [('state','=','out')]
+                                    'readonly': [('state', 'not in', ['out','selection'])], 
+                                    'required': [('weight_basket', '=', True)]
                                 }"
                             />
                         </group>
