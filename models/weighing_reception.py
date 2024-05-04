@@ -4,10 +4,11 @@ from odoo.exceptions import UserError, ValidationError
 
 # State definitions list
 _STATES = [
-    ("in", "Entrada"),
-    ("out", "Salida"),
-    ("selection", "Selección"),
-    ("received", "Recibido"),
+    ("draft", "New"),
+    ("in", "Input"),
+    ("out", "Exit"),
+    ("selection", "Selectión"),
+    ("received", "Received"),
 ]
 
 
@@ -17,8 +18,8 @@ class WeighingReception(models.Model):
     _description = "Weighing Reception"
     _order = "id desc"
 
-    name = fields.Char(default="Nuevo", required=False)
-    state = fields.Selection(_STATES, string="Estado", default="in")
+    name = fields.Char(default="New", required=False)
+    state = fields.Selection(_STATES, string="State", default="draft")
     farmer_id = fields.Many2one(
         "res.partner", string="Agricultor", required=True, tracking=True
     )
@@ -62,14 +63,18 @@ class WeighingReception(models.Model):
         store=True,
     )
     # basket | canastillas -----------------------------------------------------------------------------
-    qty = fields.Float(string="Cantidad de canastillas")
+    qty_basket = fields.Float(string="Cantidad de canastillas")
     basket_uom_name = fields.Char(
         string="Medida de Canastilla",
         related="basket_product_id.weight_uom_name",
     )
-    basket_product_weight = fields.Float(
+    basket_product_weight_unit = fields.Float(
         string="Peso de canastillas", related="basket_product_id.weight"
     )
+    basket_product_weight = fields.Float(
+        string="Peso de canastillas",
+    )
+
     weight_basket = fields.Boolean(string="Descontar Canastillas")
     basket_product_id = fields.Many2one(
         "product.product", string="Producto de Canastilla"
@@ -171,7 +176,7 @@ class WeighingReception(models.Model):
         "input_weight",
         "output_weight",
         "no_countable_desc",
-        "qty",
+        "qty_basket",
         "weight_basket",
         "basket_product_weight",
     )
@@ -188,17 +193,23 @@ class WeighingReception(models.Model):
         :return: None
         """
         for record in self:
-            product_weight = 0.0
             if (
                 record.input_weight
                 and record.output_weight
             ):
-                product_weight = record.input_weight - record.output_weight
-            if record.weight_basket == True and record.basket_product_weight:
-                multi_pw = product_weight * record.basket_product_weight
-                product_weight = multi_pw
-            if record.no_countable_desc == True and record.basket_product_weight:
-                product_weight = record.qty - record.no_countable_desc
+
+            input= record.input_weight 0,0
+            output = record.output_weight 0,0
+            bask_weight = record.basket_product_weight_unit * qty_basket
+            no_countable =record.no_countable_desc
+            product_weight = input - output - bask_weight - no_countable
+
+            # if record.weight_basket == True and record.basket_product_weight:
+            #     multi_pw = product_weight * record.basket_product_weight
+            #     product_weight = multi_pw
+            # if record.no_countable_desc == True and record.basket_product_weight:
+            #     product_weight = record.qty_basket - record.no_countable_desc
+            record.basket_product_weight = bask_weight
             record.product_weight = product_weight
 
     @api.depends("transfer_ids")
@@ -241,6 +252,10 @@ class WeighingReception(models.Model):
 
     # State Actions
 
+    def action_in(self):
+        self.ensure_one()
+        self.state = "in"
+
     def action_out(self):
         self.ensure_one()
         self.state = "out"
@@ -276,7 +291,7 @@ class WeighingReception(models.Model):
                         "name": self.product_name,
                         "product_id": self.product_id.id,
                         "product_uom": self.product_uom_id.id,
-                        "product_uom_qty": self.qty,
+                        "product_uom_qty": self.qty_basket,
                         "location_id": self.location_id.id,
                         "location_dest_id": self.location_dest_id.id,
                     },
