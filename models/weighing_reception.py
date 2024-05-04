@@ -200,7 +200,7 @@ class WeighingReception(models.Model):
 
                 in_weight= record.input_weight
                 output = record.output_weight
-                bask_weight = record.basket_product_weight_unit * qty_basket
+                bask_weight = record.basket_product_weight_unit * record.qty_basket
                 no_countable =record.no_countable_desc
                 product_weight = in_weight - output - bask_weight - no_countable
 
