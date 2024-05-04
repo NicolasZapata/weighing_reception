@@ -72,7 +72,7 @@ class WeighingReception(models.Model):
         string="Peso de canastillas", related="basket_product_id.weight"
     )
     basket_product_weight = fields.Float(
-        string="Peso de canastillas",
+        string="Peso de canastillas"
     )
 
     weight_basket = fields.Boolean(string="Descontar Canastillas")
@@ -193,23 +193,23 @@ class WeighingReception(models.Model):
         :return: None
         """
         for record in self:
+            product_weight=0
             if (
                 record.input_weight
                 and record.output_weight
             ):
-
-                in_weight= record.input_weight
-                output = record.output_weight
-                bask_weight = record.basket_product_weight_unit * record.qty_basket
-                no_countable =record.no_countable_desc
-                product_weight = in_weight - output - bask_weight - no_countable
+                    in_weight= record.input_weight
+                    output = record.output_weight
+                    bask_weight = record.basket_product_weight_unit * record.qty_basket
+                    no_countable =record.no_countable_desc
+                    product_weight = in_weight - output - bask_weight - no_countable
 
             # if record.weight_basket == True and record.basket_product_weight:
             #     multi_pw = product_weight * record.basket_product_weight
             #     product_weight = multi_pw
             # if record.no_countable_desc == True and record.basket_product_weight:
             #     product_weight = record.qty_basket - record.no_countable_desc
-            record.basket_product_weight = bask_weight
+            # record.basket_product_weight = bask_weight
             record.product_weight = product_weight
 
     @api.depends("transfer_ids")
