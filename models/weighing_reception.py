@@ -198,11 +198,11 @@ class WeighingReception(models.Model):
                 and record.output_weight
             ):
 
-            input= record.input_weight 0,0
-            output = record.output_weight 0,0
-            bask_weight = record.basket_product_weight_unit * qty_basket
-            no_countable =record.no_countable_desc
-            product_weight = input - output - bask_weight - no_countable
+                in_weight= record.input_weight
+                output = record.output_weight
+                bask_weight = record.basket_product_weight_unit * qty_basket
+                no_countable =record.no_countable_desc
+                product_weight = in_weight - output - bask_weight - no_countable
 
             # if record.weight_basket == True and record.basket_product_weight:
             #     multi_pw = product_weight * record.basket_product_weight
