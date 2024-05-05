@@ -64,7 +64,7 @@
                     optional="show"
                     decoration-bf="True"
                 />
-                <field name="qty" optional="show" />
+                <field name="qty_basket" optional="show" />
                 <field
                     name="product_uom_id"
                     optional="show"
@@ -81,6 +81,12 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button
+                        name="action_in"
+                        string="Check-in"
+                        type="object"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                    />
                     <button
                         name="action_out"
                         string="Entrar"
@@ -114,7 +120,7 @@
                     <field
                         name="state"
                         widget="statusbar"
-                        statusbar_visible="in,out,selection,received"
+                        statusbar_visible="draft,in,out,selection,received"
                     />
                 </header>
                 <sheet>
@@ -166,7 +172,7 @@
                             <field
                                 name="datetime_in"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
+                                    'readonly': [('state', '!=', 'in')],
                                     'required': [('state','=','in')]
                                 }"
                             />
@@ -180,8 +186,8 @@
                             <field
                                 name="farmer_id"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
+                                    'readonly': [('state', '!=', 'draft')],
+                                    'required': [('state','=','draft')]
                                 }"
                                 widget="res_partner_many2one"
                             />
@@ -190,23 +196,23 @@
                                 domain="[('supplier_rank', '>', 0)]"
                                 context="{'default_supplier_rank': 1}"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
+                                    'readonly': [('state', '!=', 'draft')],
+                                    'required': [('state','=','draft')]
                                 }"
                                 widget="res_partner_many2one"
                             />
                             <field
                                 name="vehicle_license_plate"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
+                                    'readonly': [('state', '!=', 'draft')],
+                                    'required': [('state','=','draft')]
                                 }"
                             />
                             <field
                                 name="driver_id"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
+                                    'readonly': [('state', '!=', 'draft')],
+                                    'required': [('state','=','draft')]
                                 }"
                                 widget="res_partner_many2one"
                             />
@@ -215,15 +221,15 @@
                             <field
                                 name="employee_id"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
+                                    'readonly': [('state', '!=', 'draft')],
+                                    'required': [('state','=','draft')]
                                 }"
                                 widget="many2one_avatar_employee"
                             />
                             <field
                                 name="vehicle_uom_id"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
+                                    'readonly': [('state', '!=', 'in')],
                                     'required': [('state','=','in')]
                                 }"
                             />
@@ -302,7 +308,7 @@
                     >
                         <group>
                             <field
-                                name="qty"
+                                name="qty_basket"
                                 attrs="{
                                     'readonly': [('state', 'not in', ['selection', 'received'])], 
                                     'required': [('weight_basket', '=', True)]
@@ -321,9 +327,17 @@
                             <label for="basket_product_weight" />
                             <div>
                                 <field
-                                    name="basket_product_weight"
+                                    name="basket_product_weight_unit"
                                     attrs="{
                                         'readonly': [('state', 'not in', ['out','selection'])], 
+                                        'required': [('weight_basket', '=', True)]
+                                    }"
+                                    class="oe_inline"
+                                />
+                                <field
+                                    name="basket_product_weight"
+                                    attrs="{
+                                        'readonly': True,
                                         'required': [('weight_basket', '=', True)]
                                     }"
                                     class="oe_inline"
@@ -344,23 +358,23 @@
                             <field
                                 name="categ_id"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
+                                    'readonly': [('state', '!=', 'draft')],
+                                    'required': [('state','=','draf')]
                                 }"
                             />
                             <field
                                 name="product_id"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
+                                    'readonly': [('state', '!=', 'draft')],
+                                    'required': [('state','=','draft')]
                                 }"
                                 domain="[('categ_id', '=', categ_id)]"
                             />
                             <field
                                 name="product_name"
                                 attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
+                                    'readonly': [('state', '!=', 'draft')],
+                                    'required': [('state','=','draft')]
                                 }"
                             />
                             <field
