@@ -71,9 +71,7 @@ class WeighingReception(models.Model):
     basket_product_weight_unit = fields.Float(
         string="Peso de canastillas", related="basket_product_id.weight"
     )
-    basket_product_weight = fields.Float(
-        string="Peso de canastillas"
-    )
+    basket_product_weight = fields.Float(string="Peso de canastillas")
 
     weight_basket = fields.Boolean(string="Descontar Canastillas")
     basket_product_id = fields.Many2one(
@@ -84,8 +82,7 @@ class WeighingReception(models.Model):
     discount_product = fields.Boolean(string="Aplicar descuento del producto")
     not_countable_weight = fields.Float(string="Peso de producto no conforme")
     not_countable_weight_uom_name = fields.Char(
-        string="Medida de producto no conforme",
-        related="product_id.weight_uom_name"
+        string="Medida de producto no conforme", related="product_id.weight_uom_name"
     )
     no_countable_desc = fields.Float(string="Producto no conforme")
     # ------------------------------------------------------------------------------------------------
@@ -173,43 +170,38 @@ class WeighingReception(models.Model):
                 record.product_name = False
 
     @api.depends(
-        "input_weight",
-        "output_weight",
-        "no_countable_desc",
-        "qty_basket",
-        "weight_basket",
-        "basket_product_weight",
+        "input_weight",  # Weight of the product at the entrance
+        "output_weight",  # Weight of the product at the exit
+        "no_countable_desc",  # Weight of the product that is not countable
+        "qty_basket",  # Quantity of baskets
+        "weight_basket",  # Weight of a basket
+        "basket_product_weight",  # Weight of the product in a basket
     )
     def _compute_product_weight(self):
         """
-        Compute the weight of the product based on the difference
-        between input and output weights.
+        Compute the weight of the product.
 
-        This method is triggered whenever the values of the
-        "input_weight" or "output_weight" fields change. It updates
-        the "product_weight" field with the computed weight.
-
-        :param self: The current WeighingReception object.
-        :return: None
+        The weight of the product is computed by subtracting the weight 
+        of the product at the exit, the weight of the product in baskets,
+        and the weight of the product that is not countable, from the weight 
+        of the product at the entrance.
         """
         for record in self:
-            product_weight=0
-            if (
-                record.input_weight
-                and record.output_weight
-            ):
-                    in_weight= record.input_weight
-                    output = record.output_weight
-                    bask_weight = record.basket_product_weight_unit * record.qty_basket
-                    no_countable =record.no_countable_desc
-                    product_weight = in_weight - output - bask_weight - no_countable
+            # Initialize the weight of the product
+            product_weight = 0
 
-            # if record.weight_basket == True and record.basket_product_weight:
-            #     multi_pw = product_weight * record.basket_product_weight
-            #     product_weight = multi_pw
-            # if record.no_countable_desc == True and record.basket_product_weight:
-            #     product_weight = record.qty_basket - record.no_countable_desc
-            # record.basket_product_weight = bask_weight
+            # If the weight of the product at the entrance and the weight of 
+            # the product at the exit are available
+            if record.input_weight and record.output_weight:
+                in_weight = record.input_weight  # Weight at the entrance
+                output = record.output_weight  # Weight at the exit
+                bask_weight = record.basket_product_weight_unit * record.qty_basket  # Weight of the product in baskets
+                no_countable = record.no_countable_desc  # Weight of the product that is not countable
+
+                # Compute the weight of the product
+                product_weight = in_weight - output - bask_weight - no_countable
+
+            # Set the computed weight of the product
             record.product_weight = product_weight
 
     @api.depends("transfer_ids")
