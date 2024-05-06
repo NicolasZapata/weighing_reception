@@ -113,38 +113,99 @@ class WeighingReception(models.Model):
     # Stat buttons and stat info counts
 
     def _compute_orders_counts(self):
-        for rec in self:
-            purchase_order_counts = self.env["purchase.order"].search_count(
-                [("id", "=", rec.order_ids.ids)]
-            )
-            rec.purchase_order_counts = purchase_order_counts
+        for record in self:
+            record.purchase_order_counts = len(record.order_ids.ids)
 
     def action_open_orders(self):
-        self.ensure_one()
-        return {
-            "name": _("Purchases"),
+        action = {
+            "name": _("Recepciones"),
             "type": "ir.actions.act_window",
-            "view_mode": "list,form",
             "res_model": "purchase.order",
-            # "domain": [("id", "in", self.order_ids.ids)],
+            "context": {"create": False},
         }
+        if len(self.order_ids) == 1:
+            action.update(
+                {
+                    "view_mode": "form",
+                    "res_id": self.order_ids.id,
+                }
+            )
+        else:
+            action.update(
+                {
+                    "view_mode": "list,form",
+                    "domain": [("id", "in", self.order_ids.ids)],
+                }
+            )
+        return action
 
     def _compute_reception_counts(self):
-        for rec in self:
-            reception_counts = self.env["weighing.reception"].search_count(
-                [("id", "=", rec.reception_ids.ids)]
-            )
-            rec.reception_counts = reception_counts
+        for record in self:
+            record.reception_counts = len(record.reception_ids.ids)
 
     def action_open_receptions(self):
         self.ensure_one()
-        return {
-            "name": _("Receptions"),
+        action = {
+            "name": _("Recepciones"),
             "type": "ir.actions.act_window",
-            "view_mode": "list,form",
             "res_model": "weighing.reception",
-            # "domain": [("id", "in", self.reception_ids.ids)],
+            "context": {"create": False},
         }
+        if len(self.reception_ids) == 1:
+            action.update(
+                {
+                    "view_mode": "form",
+                    "res_id": self.reception_ids.id,
+                }
+            )
+        else:
+            action.update(
+                {
+                    "view_mode": "list,form",
+                    "domain": [("id", "in", self.reception_ids.ids)],
+                }
+            )
+        return action
+
+    @api.depends("transfer_ids")
+    def _compute_transfer_count(self):
+        """
+        Compute the number of transfers.
+        """
+        for record in self:
+            record.transfer_count = len(record.transfer_ids.ids)
+
+    def action_view_transfer(self):
+        """
+        Generates an action to view the transfers.
+
+        :return: A dictionary representing the action to view the transfers.
+        :rtype: dict
+        """
+        self.ensure_one()
+        action = {
+            "name": _("Transferencias"),
+            "type": "ir.actions.act_window",
+            "res_model": "stock.picking",
+            "context": {"create": False},
+        }
+        if len(self.transfer_ids) == 1:
+            action.update(
+                {
+                    "view_mode": "form",
+                    "res_id": self.transfer_ids.id,
+                }
+            )
+        else:
+            action.update(
+                {
+                    "view_mode": "list,form",
+                    "domain": [("id", "in", self.transfer_ids.ids)],
+                }
+            )
+        return action
+
+    # Computed Files (Normal Fields) and Created Files (Related Fields)
 
     @api.model
     def create(self, vals):
@@ -206,61 +267,15 @@ class WeighingReception(models.Model):
             # Set the computed weight of the product
             record.product_weight = product_weight
 
-    @api.depends("transfer_ids")
-    def _compute_transfer_count(self):
-        """
-        Compute the number of transfers.
-        """
-        for record in self:
-            record.transfer_count = len(record.transfer_ids.ids)
+    # Auto Creation Models Methods
 
-    def action_view_transfer(self):
+    def action_finish_reception(self):
         """
-        Generates an action to view the transfers.
-
-        :return: A dictionary representing the action to view the transfers.
-        :rtype: dict
+        Finish the reception of the product and creates its order and transfer.
         """
         self.ensure_one()
-        action = {
-            "name": _("Transferencias"),
-            "type": "ir.actions.act_window",
-            "res_model": "stock.picking",
-            "context": {"create": False},
-        }
-        if len(self.transfer_ids) == 1:
-            action.update(
-                {
-                    "view_mode": "form",
-                    "res_id": self.transfer_ids.id,
-                }
-            )
-        else:
-            action.update(
-                {
-                    "view_mode": "list,form",
-                    "domain": [("id", "in", self.transfer_ids.ids)],
-                }
-            )
-        return action
-
-    # State Actions
-
-    def action_in(self):
-        self.ensure_one()
-        self.state = "in"
-
-    def action_out(self):
-        self.ensure_one()
-        self.state = "out"
-
-    def action_selection(self):
-        self.ensure_one()
-        self.state = "selection"
-
-    def action_received(self):
-        self.ensure_one()
-        self.state = "received"
+        self.action_transfer()
+        self.action_order()
 
     def action_transfer(self):
         """
@@ -297,6 +312,101 @@ class WeighingReception(models.Model):
             self.transfer_ids += picking_id
         except Exception as e:
             raise ValidationError(_(e))
+
+    def action_order(self):
+        """
+        Creates a purchase order for the current farmer and product.
+
+        This method ensures that there is only one record in the current recordset
+        before proceeding with the order creation. It then creates a dictionary
+        `vals` with the necessary information for the purchase order. The `vals`
+        dictionary includes the farmer's partner ID, an order line with the product
+        ID, product name, and quantity.
+
+        After creating the purchase order using the `vals` dictionary, the method
+        adds the created order to the `order_ids` field of the current recordset.
+
+        If any exception occurs during the order creation, a `ValidationError` is
+        raised with the error message.
+
+        :return: The created purchase order.
+        :rtype: purchase.order
+        :raises: ValidationError if an error occurs during the order creation.
+        """
+        self.ensure_one()
+        vals = {
+            "partner_id": self.supplier_id.id,
+            "order_line": [
+                (
+                    0,
+                    0,
+                    {
+                        "product_id": self.product_id.id,
+                        "name": self.product_name,
+                        "product_qty": self.qty_basket,
+                    },
+                )
+            ],
+        }
+        try:
+            order_id = self.env["purchase.order"].sudo().create(vals)
+            self.order_ids += order_id
+        except Exception as e:
+            raise ValidationError(_(e))
+
+    def action_reception(self):
+        """
+        Creates a stock picking for transferring goods from a location to another.
+
+        :return: The created stock picking.
+        :rtype: stock.picking
+        :raises: ValidationError if an error occurs during the creation of the stock picking.
+        """
+        self.ensure_one()
+        vals = {
+            #'name': 'Incoming picking (negative product)',
+            "partner_id": self.supplier_id.id,
+            "picking_type_id": self.env.ref("stock.picking_type_in").id,
+            "location_id": self.location_id.id,
+            "location_dest_id": self.location_dest_id.id,
+            "move_ids": [
+                (
+                    0,
+                    0,
+                    {
+                        "name": self.product_name,
+                        "product_id": self.product_id.id,
+                        "product_uom": self.product_uom_id.id,
+                        "product_uom_qty": self.qty_basket,
+                        "location_id": self.location_id.id,
+                        "location_dest_id": self.location_dest_id.id,
+                    },
+                )
+            ],
+        }
+        try:
+            picking_id = self.env["weighing.reception"].sudo().create(vals)
+            self.transfer_ids += picking_id
+        except Exception as e:
+            raise ValidationError(_(e))
+
+    # State Actions
+
+    def action_in(self):
+        self.ensure_one()
+        self.state = "in"
+
+    def action_out(self):
+        self.ensure_one()
+        self.state = "out"
+
+    def action_selection(self):
+        self.ensure_one()
+        self.state = "selection"
+
+    def action_received(self):
+        self.ensure_one()
+        self.state = "received"
 
     def action_print(self):
         """

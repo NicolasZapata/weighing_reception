@@ -106,17 +106,19 @@
                         attrs="{'invisible': [('state', 'not in', ['selection'])]}"
                     />
                     <button
-                        name="action_transfer"
-                        string="Crear Compra"
+                        name="action_finish_reception"
+                        string="Crear Orden de Compra"
                         type="object"
                         attrs="{
                             'invisible': [
                                 '|',
                                 ('state', 'not in', ['received']), 
-                                ('transfer_count', '&gt;', 0)
+                                ('transfer_count', '&gt;', 0),
+                                ('purchase_order_counts', '&gt;', 0)
                             ]
                         }"
                     />
+
                     <field
                         name="state"
                         widget="statusbar"
@@ -142,25 +144,27 @@
                             name="action_open_receptions"
                             type="object"
                             class="oe_stat_button"
-                            string="Recepciones"
                             icon="fa-truck"
+                            attrs="{'invisible': [('reception_counts', '=', 0)]}"
                         >
-                            <!-- <field
+                            <field
                                 name="reception_counts"
+                                string="Recepciones"
                                 widget="statinfo"
-                            /> -->
+                            />
                         </button>
                         <button
                             name="action_open_orders"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-first-order"
-                            string="Ordenes de venta"
+                            attrs="{'invisible': [('purchase_order_counts', '=', 0)]}"
                         >
-                            <!-- <field
+                            <field
                                 name="purchase_order_counts"
                                 widget="statinfo"
-                            /> -->
+                                string="Ordenes de venta"
+                            />
                         </button>
                     </div>
                     <div class="oe_title">
@@ -253,7 +257,7 @@
                                     'required': [('state','=','in')]
                                 }"
                             />
-                            <label for="product_weight"/>
+                            <label for="product_weight" />
                             <div>
                                 <field
                                     name="product_weight"
