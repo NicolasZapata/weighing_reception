@@ -284,138 +284,146 @@
                             <field name="weight_basket" widget="boolean_toggle" />
                         </group>
                     </group>
-                    <group
-                        name="product_discount"
-                        string="Descuento del producto"
-                        attrs="{
-                            'invisible': [
-                                '|',
-                                ('state', 'not in', ['selection', 'received']),
-                                ('discount_product', '=', False)
-                            ]
-                        }"
-                    >
-                        <label for="not_countable_weight" />
-                        <div>
-                            <field
-                                name="not_countable_weight"
-                                attrs="{
-                                    'readonly': [('state', 'not in', ['out','selection'])], 
-                                    'required': [('weight_basket', '=', True)]
-                                }"
-                                class="oe_inline"
-                            />
-                            <field
-                                name="not_countable_weight_uom_name"
-                                attrs="{
-                                    'required': [('weight_basket', '=', True)]
-                                }"
-                                class="oe_inline"
-                            />
-                        </div>
-                    </group>
-                    <group
-                        name="Canastillas"
-                        string="Canastillas"
-                        attrs="{
-                            'invisible': [
-                                '|',
-                                ('state', 'not in', ['selection', 'received']),
-                                ('weight_basket', '=', False)
-                            ]
-                        }"
-                    >
-                        <group>
-                            <field
-                                name="qty_basket"
-                                attrs="{
-                                    'readonly': [('state', 'not in', ['selection', 'received'])], 
-                                    'required': [('weight_basket', '=', True)]
-                                }"
-                            />
-                            <field
-                                name="basket_product_id"
-                                attrs="{
-                                    'readonly': [('state', 'not in', ['out','selection'])], 
-                                    'required': [('weight_basket', '=', True)]
-                                }"
-                                domain="[('available_in_stock', '=', True)]"
-                            />
-                        </group>
-                        <group>
-                            <label for="basket_product_weight" />
-                            <div>
-                                <field
-                                    name="basket_product_weight_unit"
-                                    attrs="{
-                                        'readonly': [('state', 'not in', ['out','selection'])], 
-                                        'required': [('weight_basket', '=', True)]
-                                    }"
-                                    class="oe_inline"
-                                />
-                                <field
-                                    name="basket_product_weight"
-                                    attrs="{
-                                        'readonly': True,
-                                        'required': [('weight_basket', '=', True)]
-                                    }"
-                                    class="oe_inline"
-                                />
-                                <field
-                                    name="basket_uom_name"
-                                    attrs="{
-                                        'required': [('weight_basket', '=', True)]
-                                    }"
-                                    class="oe_inline"
-                                    placeholder="Agregar Medida. Por ejemplo: kg"
-                                />
-                            </div>
-                        </group>
-                    </group>
-                    <group>
-                        <group string="Datos del producto">
-                            <field
-                                name="categ_id"
-                                attrs="{
+                    <notebook>
+                        <page name="product_data" string="Datos para transferencia">
+                            <group>
+                                <group string="Datos del producto">
+                                    <field
+                                        name="categ_id"
+                                        attrs="{
                                     'readonly': [('state', '!=', 'draft')],
                                     'required': [('state','=','draf')]
                                 }"
-                            />
-                            <field
-                                name="product_id"
-                                attrs="{
+                                    />
+                                    <field
+                                        name="product_id"
+                                        attrs="{
                                     'readonly': [('state', '!=', 'draft')],
                                     'required': [('state','=','draft')]
                                 }"
-                                domain="[('categ_id', '=', categ_id)]"
-                            />
-                            <field
-                                name="product_name"
-                                attrs="{
+                                        domain="[('categ_id', '=', categ_id)]"
+                                    />
+                                    <field
+                                        name="product_name"
+                                        attrs="{
                                     'readonly': [('state', '!=', 'draft')],
                                     'required': [('state','=','draft')]
                                 }"
-                            />
-                            <field
-                                name="product_uom_id"
-                                attrs="{
+                                    />
+                                    <field
+                                        name="product_uom_id"
+                                        attrs="{
                                     'readonly': [('state', 'not in', ['out','received'])], 
                                     'required': [('state','=','out')]
                                 }"
-                            />
-                        </group>
-                        <group string="Datos para transferencia">
-                            <field name="active" invisible="1" />
-                            <field
-                                name="location_id"
-                                attrs="{'required': [('state', '=', 'received')]}"
-                            />
-                            <field
-                                name="location_dest_id"
-                                attrs="{'required': [('state', '=', 'received')]}"
-                            />
-                        </group>
-                    </group>
+                                    />
+                                </group>
+                                <group string="Datos para transferencia">
+                                    <field name="active" invisible="1" />
+                                    <field
+                                        name="location_id"
+                                        attrs="{'required': [('state', '=', 'received')]}"
+                                    />
+                                    <field
+                                        name="location_dest_id"
+                                        attrs="{'required': [('state', '=', 'received')]}"
+                                    />
+                                </group>
+                            </group>
+                        </page>
+                        <page
+                            name="product_discount"
+                            string="Descuento del producto"
+                            attrs="{
+                                'invisible': [
+                                    '|',
+                                    ('state', 'not in', ['selection', 'received']),
+                                    ('discount_product', '=', False)
+                                ]
+                            }"
+                        >
+                            <group>
+                                <label for="not_countable_weight" />
+                                <div>
+                                    <field
+                                        name="not_countable_weight"
+                                        attrs="{
+                                    'readonly': [('state', 'not in', ['out','selection'])], 
+                                    'required': [('weight_basket', '=', True)]
+                                }"
+                                        class="oe_inline"
+                                    />
+                                    <field
+                                        name="not_countable_weight_uom_name"
+                                        attrs="{
+                                    'required': [('weight_basket', '=', True)]
+                                }"
+                                        class="oe_inline"
+                                    />
+                                </div>
+                            </group>
+                        </page>
+                        <page
+                            name="Canastillas"
+                            string="Canastillas"
+                            attrs="{
+                                    'invisible': [
+                                        '|',
+                                        ('state', 'not in', ['selection', 'received']),
+                                        ('weight_basket', '=', False)
+                                    ]
+                            }"
+                        >
+                            <group>
+                                <group>
+                                    <field
+                                        name="qty_basket"
+                                        attrs="{
+                                            'readonly': [('state', 'not in', ['selection', 'received'])], 
+                                            'required': [('weight_basket', '=', True)]
+                                        }"
+                                    />
+                                    <field
+                                        name="basket_product_id"
+                                        attrs="{
+                                            'readonly': [('state', 'not in', ['out','selection'])], 
+                                            'required': [('weight_basket', '=', True)]
+                                        }"
+                                        domain="[('available_in_stock', '=', True)]"
+                                    />
+                                </group>
+                                <group>
+                                    <label for="basket_product_weight" />
+                                    <div>
+                                        <field
+                                            name="basket_product_weight_unit"
+                                            attrs="{
+                                                'readonly': [('state', 'not in', ['out','selection'])], 
+                                                'required': [('weight_basket', '=', True)]
+                                            }"
+                                            class="oe_inline"
+                                        />
+                                        <field
+                                            name="basket_product_weight"
+                                            attrs="{
+                                                'readonly': True,
+                                                'required': [('weight_basket', '=', True)]
+                                            }"
+                                            class="oe_inline"
+                                        />
+                                        <field
+                                            name="basket_uom_name"
+                                            attrs="{
+                                                'required': [('weight_basket', '=', True)]
+                                            }"
+                                            class="oe_inline"
+                                            placeholder="Agregar Medida. Por ejemplo: kg"
+                                        />
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers" />
