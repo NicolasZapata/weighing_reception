@@ -173,7 +173,6 @@
                     <div
                         name="options"
                         attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
-                        string="Habilitar Descuentos no contables y descuentos de canastillas"
                     >
                         <span class="d-inline-block">
                             <field name="discount_product" />
@@ -184,104 +183,106 @@
                             <label for="weight_basket" />
                         </span>
                     </div>
-                    <group string="Datos generales">
-                        <group>
-                            <field
-                                name="datetime_in"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'in')],
-                                    'required': [('state','=','in')]
-                                }"
-                            />
-                            <field
-                                name="datetime_out"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'out')], 
-                                    'required': [('state','=','out')]
-                                }"
-                            />
-                            <field
-                                name="farmer_id"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'draft')],
-                                    'required': [('state','=','draft')]
-                                }"
-                                widget="res_partner_many2one"
-                            />
-                            <field
-                                name="supplier_id"
-                                domain="[('supplier_rank', '>', 0)]"
-                                context="{'default_supplier_rank': 1}"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'draft')],
-                                    'required': [('state','=','draft')]
-                                }"
-                                widget="res_partner_many2one"
-                            />
-                            <field
-                                name="vehicle_license_plate"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'draft')],
-                                    'required': [('state','=','draft')]
-                                }"
-                            />
-                            <field
-                                name="driver_id"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'draft')],
-                                    'required': [('state','=','draft')]
-                                }"
-                                widget="res_partner_many2one"
-                            />
-                        </group>
-                        <group>
-                            <field
-                                name="employee_id"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'draft')],
-                                    'required': [('state','=','draft')]
-                                }"
-                                widget="many2one_avatar_employee"
-                            />
-                            <field
-                                name="vehicle_uom_id"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'in')],
-                                    'required': [('state','=','in')]
-                                }"
-                            />
-                            <field
-                                name="input_weight"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'in')], 
-                                    'required': [('state','=','in')]
-                                }"
-                            />
-                            <field
-                                name="output_weight"
-                                attrs="{
-                                    'readonly': [('state', '!=', 'out')], 
-                                    'required': [('state','=','in')]
-                                }"
-                            />
-                            <label for="product_weight" />
-                            <div>
-                                <field
-                                    name="product_weight"
-                                    attrs="{'required': [('state','=',['out'])]}"
-                                    class="oe_inline"
-                                />
-                                <field
-                                    name="standar_uom_weight_name"
-                                    class="oe_inline"
-                                />
-                            </div>
-                        </group>
-                    </group>
                     <notebook>
-                        <page name="product_data" string="Datos para transferencia">
+                        <page string="Datos generales">
                             <group>
-                                <group string="Datos del producto">
+                                <group>
+                                    <field
+                                        name="datetime_in"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'in')],
+                                            'required': [('state','=','in')]
+                                        }"
+                                    />
+                                    <field
+                                        name="datetime_out"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'out')], 
+                                            'required': [('state','=','out')]
+                                        }"
+                                    />
+                                    <field
+                                        name="farmer_id"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'draft')],
+                                            'required': [('state','=','draft')]
+                                        }"
+                                        widget="res_partner_many2one"
+                                    />
+                                    <field
+                                        name="supplier_id"
+                                        domain="[('supplier_rank', '>', 0)]"
+                                        context="{'default_supplier_rank': 1}"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'draft')],
+                                            'required': [('state','=','draft')]
+                                        }"
+                                        widget="res_partner_many2one"
+                                    />
+                                    <field
+                                        name="vehicle_license_plate"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'draft')],
+                                            'required': [('state','=','draft')]
+                                        }"
+                                    />
+                                    <field
+                                        name="driver_id"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'draft')],
+                                            'required': [('state','=','draft')]
+                                        }"
+                                        widget="res_partner_many2one"
+                                    />
+                                </group>
+                                <group>
+                                    <field
+                                        name="employee_id"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'draft')],
+                                            'required': [('state','=','draft')]
+                                        }"
+                                        widget="many2one_avatar_employee"
+                                    />
+                                    <field
+                                        name="vehicle_uom_id"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'in')],
+                                            'required': [('state','=','in')]
+                                        }"
+                                    />
+                                    <field
+                                        name="input_weight"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'in')], 
+                                            'required': [('state','=','in')]
+                                        }"
+                                    />
+                                    <field
+                                        name="output_weight"
+                                        attrs="{
+                                            'readonly': [('state', '!=', 'out')], 
+                                            'required': [('state','=','in')]
+                                        }"
+                                    />
+                                    <label for="product_weight" />
+                                    <div>
+                                        <field
+                                            name="product_weight"
+                                            attrs="{'required': [('state','=',['out'])]}"
+                                            class="oe_inline"
+                                        />
+                                        <field
+                                            name="standar_uom_weight_name"
+                                            class="oe_inline"
+                                        />
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="product_data" string="Información del producto">
+                            <group>
+                                <group string="Datos del producto  ">
                                     <field
                                         name="categ_id"
                                         attrs="{
@@ -312,7 +313,7 @@
                                         }"
                                     />
                                 </group>
-                                <group string="Información del producto">
+                                <group string="Datos de la transferencia">
                                     <field name="active" invisible="1" />
                                     <field
                                         name="location_id"
