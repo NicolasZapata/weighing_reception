@@ -109,7 +109,13 @@
                         name="action_finish_reception"
                         string="Crear Orden de Compra"
                         type="object"
-                        attrs="{ 'invisible': [('state', 'not in', ['received'])]}"
+                        attrs="{ 
+                            'invisible': [
+                                '|',
+                                ('state', 'not in', 'received'),
+                                ('transfer_count', '&gt;', 0),
+                            ]
+                        }"
                     />
 
                     <field
@@ -243,6 +249,7 @@
                                             'required': [('state','=','draft')]
                                         }"
                                         widget="many2one_avatar_employee"
+                                        domain="[('user_id', '=', uid)]"
                                     />
                                     <field
                                         name="vehicle_uom_id"

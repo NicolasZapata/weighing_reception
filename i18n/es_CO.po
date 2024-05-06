@@ -1,0 +1,687 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* weighing_reception
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0-20231120\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-06 22:28+0000\n"
+"PO-Revision-Date: 2024-05-06 22:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: weighing_reception
+#: model:ir.actions.report,print_report_name:weighing_reception.action_weighing_reception_report
+msgid "'Weighing_%s' % object.name"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__active
+msgid "Activo"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Agregar Medida. Por ejemplo: kg"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__farmer_id
+msgid "Agricultor"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Agricultor:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__discount_product
+msgid "Aplicar descuento del producto"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Canastillas"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__qty_basket
+msgid "Cantidad de canastillas"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Cantidad:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__categ_id
+msgid "Categoría del Producto"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__categ_id
+msgid ""
+"Categoría del producto (Se usa para filtrar los productos por su categoría)"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Check-in"
+msgstr "Registrarse"
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__driver_id
+msgid "Conductor"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Conductor:"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.actions.act_window,help:weighing_reception.action_weighing_reception
+msgid "Crea una nueva recepción de peso"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Crear Orden de Compra"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "DATOS DE TRANSFERENCIA"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "DATOS DEL PRODUCTO"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "DATOS GENERALES"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Datos de la transferencia"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Datos del producto"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Datos generales"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__product_uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__weight_basket
+msgid "Descontar Canastillas"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__product_name
+msgid "Descripción"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Descripción:"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Descuento del producto"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_product_product__available_in_stock
+#: model:ir.model.fields,field_description:weighing_reception.field_product_template__available_in_stock
+msgid "Disponible en pesaje de compras"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__transfer_ids
+msgid "Entrada"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Entrar"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields.selection,name:weighing_reception.selection__weighing_reception__state__out
+msgid "Exit"
+msgstr "Salida"
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__datetime_in
+msgid "Fecha/hora recepción"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Fecha/hora recepción:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__datetime_out
+msgid "Fecha/hora salida"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Fecha/hora salida:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__id
+msgid "ID"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__message_has_error
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Información del producto"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields.selection,name:weighing_reception.selection__weighing_reception__state__in
+msgid "Input"
+msgstr "Entrada"
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_tree
+msgid "Lista de Configuraciones"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__location_dest_id
+msgid "Locación destino"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Locación destino:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__location_id
+msgid "Locación origen"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Locación origen:"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Logo"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_uom_name
+msgid "Medida de Canastilla"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__not_countable_weight_uom_name
+msgid "Medida de producto no conforme"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__product_uom_id
+msgid "Medida del producto"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__name
+msgid "Name"
+msgstr ""
+
+#. module: weighing_reception
+#. odoo-python
+#: code:addons/weighing_reception/models/weighing_reception.py:0
+#: model:ir.model.fields.selection,name:weighing_reception.selection__weighing_reception__state__draft
+#, python-format
+msgid "New"
+msgstr "Nuevo"
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Número"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__order_ids
+msgid "Ordenes de compra"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Ordenes de venta"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_weight
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_weight_unit
+msgid "Peso de canastillas"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__input_weight
+msgid "Peso de entrada del vehículo"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__not_countable_weight
+msgid "Peso de producto no conforme"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__output_weight
+msgid "Peso de salida del vehículo"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__product_weight
+msgid "Peso del producto neto"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Peso entrada:"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Peso producto:"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Peso salida:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__vehicle_license_plate
+msgid "Placa vehículo"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Placa vehículo:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model,name:weighing_reception.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__product_id
+msgid "Producto"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__product_id
+msgid "Producto (Se usa para filtrar los productos)"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_id
+msgid "Producto de Canastilla"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__no_countable_desc
+msgid "Producto no conforme"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Producto:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__supplier_id
+msgid "Proveedor"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Proveedor:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model,name:weighing_reception.model_purchase_order
+msgid "Purchase Order"
+msgstr "Orden de Compra"
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__purchase_order_counts
+msgid "Purchase Order Counts"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid ""
+"Página\n"
+"                            <span class=\"page\"/>\n"
+"                            de\n"
+"                            <span class=\"topage\"/>"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields.selection,name:weighing_reception.selection__weighing_reception__state__received
+msgid "Received"
+msgstr "Recibido"
+
+#. module: weighing_reception
+#. odoo-python
+#: code:addons/weighing_reception/models/weighing_reception.py:0
+#: code:addons/weighing_reception/models/weighing_reception.py:0
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__reception_ids
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+#, python-format
+msgid "Recepciones"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.actions.act_window,name:weighing_reception.action_weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_purchase_order__weighing_reception_id
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__weighing_reception_id
+#: model:ir.ui.menu,name:weighing_reception.menu_purchase_weighing_reception
+msgid "Recepción"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.actions.report,name:weighing_reception.action_weighing_reception_report
+msgid "Recepción de pesaje"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__reception_counts
+msgid "Reception Counts"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__employee_id
+msgid "Receptor"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Receptor:"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Recibir"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Selection"
+msgstr "Selección"
+
+#. module: weighing_reception
+#: model:ir.model.fields.selection,name:weighing_reception.selection__weighing_reception__state__selection
+msgid "Selectión"
+msgstr "Seleción"
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__state
+msgid "State"
+msgstr "Estado"
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__transfer_count
+msgid "Transfer Count"
+msgstr ""
+
+#. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
+msgid "Transferencia:"
+msgstr ""
+
+#. module: weighing_reception
+#. odoo-python
+#: code:addons/weighing_reception/models/weighing_reception.py:0
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+#, python-format
+msgid "Transferencias"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__vehicle_uom_id
+msgid "Unidad de medida del vehículo"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,help:weighing_reception.field_weighing_reception__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model,name:weighing_reception.model_weighing_reception
+msgid "Weighing Reception"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__standar_uom_weight_name
+msgid "uom.uom"
+msgstr ""
