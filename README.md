@@ -1,11 +1,6 @@
-<p align="center">
 ![Quanam](https://th.bing.com/th/id/OIP.0Xx4DLmevXnccTkfC-ffYQHaGZ?rs=1&pid=ImgDetMain)
 <h1> GRUPO QUANAM COLOMBIA SAS </h1>
-<h2> Copyright 2023 - </span id="year"></h2> 
-<script>
-  document.getElementById("year").innerHTML = new Date().getFullYear();
-</script>
-</p>
+<h2> Copyright 2023 - 2024</h2> 
 
 ## Module Name
 Weighning Reception
