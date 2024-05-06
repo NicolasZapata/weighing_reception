@@ -117,7 +117,6 @@
                             ]
                         }"
                     />
-
                     <field
                         name="state"
                         widget="statusbar"
@@ -262,14 +261,14 @@
                                         name="input_weight"
                                         attrs="{
                                             'readonly': [('state', '!=', 'in')], 
-                                            'required': [('state','=','in')]
+                                            'required': [('state', '=', 'in')]
                                         }"
                                     />
                                     <field
                                         name="output_weight"
                                         attrs="{
                                             'readonly': [('state', '!=', 'out')], 
-                                            'required': [('state','=','in')]
+                                            'required': [('state','=','out')]
                                         }"
                                     />
                                     <label for="product_weight" />
@@ -289,12 +288,12 @@
                         </page>
                         <page name="product_data" string="Información del producto">
                             <group>
-                                <group string="Datos del producto  ">
+                                <group string="Datos del producto">
                                     <field
                                         name="categ_id"
                                         attrs="{
                                             'readonly': [('state', '!=', 'draft')],
-                                            'required': [('state','=','draf')]
+                                            'required': [('state','=','draft')]
                                         }"
                                     />
                                     <field
@@ -369,11 +368,11 @@
                             name="Canastillas"
                             string="Canastillas"
                             attrs="{
-                                    'invisible': [
-                                        '|',
-                                        ('state', 'not in', ['selection', 'received']),
-                                        ('weight_basket', '=', False)
-                                    ]
+                                'invisible': [
+                                    '|',
+                                    ('state', 'not in', ['selection', 'received']),
+                                    ('weight_basket', '=', False)
+                                ]
                             }"
                         >
                             <group>
