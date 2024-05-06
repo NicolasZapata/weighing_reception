@@ -109,14 +109,7 @@
                         name="action_finish_reception"
                         string="Crear Orden de Compra"
                         type="object"
-                        attrs="{
-                            'invisible': [
-                                '|',
-                                ('state', 'not in', ['received']), 
-                                ('transfer_count', '&gt;', 0),
-                                ('purchase_order_counts', '&gt;', 0)
-                            ]
-                        }"
+                        attrs="{ 'invisible': [('state', 'not in', ['received'])]}"
                     />
 
                     <field
@@ -176,6 +169,20 @@
                         <h1 class="mt0">
                             <field name="name" readonly="1" />
                         </h1>
+                    </div>
+                    <div
+                        name="options"
+                        attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
+                        string="Habilitar Descuentos no contables y descuentos de canastillas"
+                    >
+                        <span class="d-inline-block">
+                            <field name="discount_product" />
+                            <label for="discount_product" />
+                        </span>
+                        <span class="d-inline-block">
+                            <field name="weight_basket" />
+                            <label for="weight_basket" />
+                        </span>
                     </div>
                     <group string="Datos generales">
                         <group>
@@ -269,19 +276,6 @@
                                     class="oe_inline"
                                 />
                             </div>
-
-                        </group>
-                    </group>
-                    <group
-                        name="checkers"
-                        attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
-                        string="Habilitar Descuentos no contables y descuentos de canastillas"
-                    >
-                        <group>
-                            <field name="discount_product" widget="boolean_toggle" />
-                        </group>
-                        <group>
-                            <field name="weight_basket" widget="boolean_toggle" />
                         </group>
                     </group>
                     <notebook>
@@ -291,34 +285,34 @@
                                     <field
                                         name="categ_id"
                                         attrs="{
-                                    'readonly': [('state', '!=', 'draft')],
-                                    'required': [('state','=','draf')]
-                                }"
+                                            'readonly': [('state', '!=', 'draft')],
+                                            'required': [('state','=','draf')]
+                                        }"
                                     />
                                     <field
                                         name="product_id"
                                         attrs="{
-                                    'readonly': [('state', '!=', 'draft')],
-                                    'required': [('state','=','draft')]
-                                }"
+                                            'readonly': [('state', '!=', 'draft')],
+                                            'required': [('state','=','draft')]
+                                        }"
                                         domain="[('categ_id', '=', categ_id)]"
                                     />
                                     <field
                                         name="product_name"
                                         attrs="{
-                                    'readonly': [('state', '!=', 'draft')],
-                                    'required': [('state','=','draft')]
-                                }"
+                                            'readonly': [('state', '!=', 'draft')],
+                                            'required': [('state','=','draft')]
+                                        }"
                                     />
                                     <field
                                         name="product_uom_id"
                                         attrs="{
-                                    'readonly': [('state', 'not in', ['out','received'])], 
-                                    'required': [('state','=','out')]
-                                }"
+                                            'readonly': [('state', 'not in', ['out','received'])], 
+                                            'required': [('state','=','out')]
+                                        }"
                                     />
                                 </group>
-                                <group string="Datos para transferencia">
+                                <group string="Información del producto">
                                     <field name="active" invisible="1" />
                                     <field
                                         name="location_id"
@@ -348,16 +342,16 @@
                                     <field
                                         name="not_countable_weight"
                                         attrs="{
-                                    'readonly': [('state', 'not in', ['out','selection'])], 
-                                    'required': [('weight_basket', '=', True)]
-                                }"
+                                            'readonly': [('state', 'not in', ['out','selection'])], 
+                                            'required': [('weight_basket', '=', True)]
+                                        }"
                                         class="oe_inline"
                                     />
                                     <field
                                         name="not_countable_weight_uom_name"
                                         attrs="{
-                                    'required': [('weight_basket', '=', True)]
-                                }"
+                                            'required': [('weight_basket', '=', True)]
+                                        }"
                                         class="oe_inline"
                                     />
                                 </div>
