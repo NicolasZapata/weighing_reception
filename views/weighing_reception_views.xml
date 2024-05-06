@@ -142,19 +142,25 @@
                             name="action_open_receptions"
                             type="object"
                             class="oe_stat_button"
+                            string="Recepciones"
                             icon="fa-truck"
-                            attrs="{'invisible': [('reception_counts', '=', 0)]}"
                         >
-                            <field name="reception_counts" widget="statinfo" />
+                            <!-- <field
+                                name="reception_counts"
+                                widget="statinfo"
+                            /> -->
                         </button>
                         <button
                             name="action_open_orders"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-first-order"
-                            attrs="{'invisible': [('purchase_order_counts', '=', 0)]}"
+                            string="Ordenes de venta"
                         >
-                            <field name="purchase_order_counts" widget="statinfo" />
+                            <!-- <field
+                                name="purchase_order_counts"
+                                widget="statinfo"
+                            /> -->
                         </button>
                     </div>
                     <div class="oe_title">
@@ -247,10 +253,19 @@
                                     'required': [('state','=','in')]
                                 }"
                             />
-                            <field
-                                name="product_weight"
-                                attrs="{'required': [('state','=',['out'])]}"
-                            />
+                            <label for="product_weight"/>
+                            <div>
+                                <field
+                                    name="product_weight"
+                                    attrs="{'required': [('state','=',['out'])]}"
+                                    class="oe_inline"
+                                />
+                                <field
+                                    name="standar_uom_weight_name"
+                                    class="oe_inline"
+                                />
+                            </div>
+
                         </group>
                     </group>
                     <group
@@ -281,16 +296,16 @@
                             <field
                                 name="not_countable_weight"
                                 attrs="{
-                                        'readonly': [('state', 'not in', ['out','selection'])], 
-                                        'required': [('weight_basket', '=', True)]
-                                    }"
+                                    'readonly': [('state', 'not in', ['out','selection'])], 
+                                    'required': [('weight_basket', '=', True)]
+                                }"
                                 class="oe_inline"
                             />
                             <field
                                 name="not_countable_weight_uom_name"
                                 attrs="{
-                                        'required': [('weight_basket', '=', True)]
-                                    }"
+                                    'required': [('weight_basket', '=', True)]
+                                }"
                                 class="oe_inline"
                             />
                         </div>

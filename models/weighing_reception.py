@@ -56,6 +56,11 @@ class WeighingReception(models.Model):
         help="Categoría del producto (Se usa para filtrar los productos por su categoría)",
     )
     product_name = fields.Char("Descripción")
+    standar_uom_weight_name = fields.Char(
+        "uom.uom",
+        related="product_id.weight_uom_name",
+        store=True,
+    )
     product_uom_id = fields.Many2one(
         "uom.uom",
         string="Medida del producto",
@@ -90,23 +95,19 @@ class WeighingReception(models.Model):
         "stock.location",
         "Locación origen",
     )
+    location_dest_id = fields.Many2one("stock.location", "Locación destino")
     order_ids = fields.One2many(
         "purchase.order",
         "weighing_reception_id",
         string="Ordenes de compra",
     )
-    purchase_order_counts = fields.Integer(
-        compute="_compute_orders_counts", string="Ordenes de venta"
-    )
-    location_dest_id = fields.Many2one("stock.location", "Locación destino")
+    purchase_order_counts = fields.Integer(compute="_compute_orders_counts")
+    reception_counts = fields.Integer(compute="_compute_reception_counts")
     weighing_reception_id = fields.Many2one("weighing.reception", string="Recepción")
     reception_ids = fields.One2many(
         "weighing.reception",
         "weighing_reception_id",
         string="Recepciones",
-    )
-    reception_counts = fields.Integer(
-        compute="_compute_reception_counts", string="Recepciones"
     )
 
     # Stat buttons and stat info counts
@@ -125,7 +126,7 @@ class WeighingReception(models.Model):
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
             "res_model": "purchase.order",
-            "domain": [("id", "in", self.order_ids.ids)],
+            # "domain": [("id", "in", self.order_ids.ids)],
         }
 
     def _compute_reception_counts(self):
@@ -142,7 +143,7 @@ class WeighingReception(models.Model):
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
             "res_model": "weighing.reception",
-            "domain": [("id", "in", self.reception_ids.ids)],
+            # "domain": [("id", "in", self.reception_ids.ids)],
         }
 
     @api.model
@@ -172,7 +173,7 @@ class WeighingReception(models.Model):
     @api.depends(
         "input_weight",  # Weight of the product at the entrance
         "output_weight",  # Weight of the product at the exit
-        "no_countable_desc",  # Weight of the product that is not countable
+        "not_countable_weight",  # Weight of the product that is not countable
         "qty_basket",  # Quantity of baskets
         "weight_basket",  # Weight of a basket
         "basket_product_weight",  # Weight of the product in a basket
@@ -181,26 +182,27 @@ class WeighingReception(models.Model):
         """
         Compute the weight of the product.
 
-        The weight of the product is computed by subtracting the weight 
+        The weight of the product is computed by subtracting the weight
         of the product at the exit, the weight of the product in baskets,
-        and the weight of the product that is not countable, from the weight 
+        and the weight of the product that is not countable, from the weight
         of the product at the entrance.
         """
         for record in self:
             # Initialize the weight of the product
             product_weight = 0
-
-            # If the weight of the product at the entrance and the weight of 
+            # If the weight of the product at the entrance and the weight of
             # the product at the exit are available
             if record.input_weight and record.output_weight:
                 in_weight = record.input_weight  # Weight at the entrance
                 output = record.output_weight  # Weight at the exit
-                bask_weight = record.basket_product_weight_unit * record.qty_basket  # Weight of the product in baskets
-                no_countable = record.no_countable_desc  # Weight of the product that is not countable
-
+                bask_weight = (
+                    record.basket_product_weight_unit * record.qty_basket
+                )  # Weight of the product in baskets
+                no_countable = (
+                    record.not_countable_weight
+                )  # Weight of the product that is not countable
                 # Compute the weight of the product
                 product_weight = in_weight - output - bask_weight - no_countable
-
             # Set the computed weight of the product
             record.product_weight = product_weight
 
