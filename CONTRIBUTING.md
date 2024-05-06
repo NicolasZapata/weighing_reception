@@ -1,7 +1,5 @@
 ![Quanam](https://th.bing.com/th/id/OIP.0Xx4DLmevXnccTkfC-ffYQHaGZ?rs=1&pid=ImgDetMain)
-
-GRUPO QUANAM SAS
-GRUPO QUANAM COLOMBIA SAS
+<h1> GRUPO QUANAM COLOMBIA SAS </h1>
 
 Desarrollo
 ==============================
