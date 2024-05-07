@@ -103,7 +103,6 @@ class WeighingReception(models.Model):
     )
     purchase_order_counts = fields.Integer(compute="_compute_orders_counts")
     # ----------------------- Transfer (stock.picking) Model ----------------------------------------
-    enable_locations = fields.Boolean(string="Habilitar ubicaciones")
     location_id = fields.Many2one(
         "stock.location",
         "Locación origen",

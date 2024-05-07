@@ -131,7 +131,7 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                       <button
+                        <button
                             name="action_open_orders"
                             type="object"
                             class="oe_stat_button"
@@ -306,21 +306,14 @@
                                     />
                                 </group>
                                 <group string="Datos de la transferencia">
-                                    <field name="enable_locations" widget="boolean_toggle" />
                                     <field name="active" invisible="1" />
                                     <field
                                         name="location_id"
-                                        attrs="{
-                                            'required': [('enable_locations', '=', True)], 
-                                            'invisible': [('enable_locations', '=', False)]
-                                        }"
+                                        attrs="{'required': [('state', '=', 'received')]}"
                                     />
                                     <field
                                         name="location_dest_id"
-                                        attrs="{
-                                            'required': [('enable_locations', '=', True)], 
-                                            'invisible': [('enable_locations', '=', False)]
-                                        }"
+                                        attrs="{'required': [('state', '=', 'received')]}"
                                     />
                                 </group>
                             </group>
@@ -380,6 +373,14 @@
                                             name="basket_product_weight_unit"
                                             attrs="{
                                                 'readonly': [('state', 'not in', ['out','selection'])], 
+                                                'required': [('weight_basket', '=', True)]
+                                            }"
+                                            class="oe_inline"
+                                        />
+                                        <field
+                                            name="basket_product_weight"
+                                            attrs="{
+                                                'readonly': True,
                                                 'required': [('weight_basket', '=', True)]
                                             }"
                                             class="oe_inline"
