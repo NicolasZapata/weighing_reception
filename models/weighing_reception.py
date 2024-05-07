@@ -114,6 +114,22 @@ class WeighingReception(models.Model):
 
     # Computed Files (Normal Fields) and Created Files (Related Fields)
 
+    @api.depends("transfer_ids")
+    def _compute_transfer_count(self):
+        """
+        Compute the number of transfers.
+        """
+        for rec in self:
+            # TODO: the count must be based on the state of the picking and 
+            # it be relate from # the purchase.order's picking 
+            stock_count = self.env["stock.picking"].search_count(
+                [
+                    ("id", "=", rec.transfer_ids.ids),
+                    ("state", "=", ["assigned", "done"]),
+                ]
+            )
+            rec.transfer_count = stock_count
+
     @api.model
     def create(self, vals):
         """
@@ -186,93 +202,6 @@ class WeighingReception(models.Model):
         # to create in the purchase order model
         # self.action_transfer() 
         self.action_order()
-
-    # Transfer (stock.picking's Model) Methods
-
-    @api.depends("transfer_ids")
-    def _compute_transfer_count(self):
-        """
-        Compute the number of transfers.
-        """
-        for rec in self:
-            # TODO: the count must be based on the state of the picking and 
-            # it be relate from # the purchase.order's picking 
-            stock_count = self.env["stock.picking"].search_count(
-                [
-                    ("id", "=", rec.transfer_ids.ids),
-                    ("state", "=", ["assigned", "done"]),
-                ]
-            )
-            rec.transfer_count = stock_count
-
-    def action_view_transfer(self):
-        """
-        Generates an action to view the transfers.
-
-        :return: A dictionary representing the action to view the transfers.
-        :rtype: dict
-        """
-        self.ensure_one()
-        action = {
-            "name": _("Transferencias"),
-            "type": "ir.actions.act_window",
-            "res_model": "stock.picking",
-            "context": {"create": False},
-        }
-        if len(self.transfer_ids) == 1:
-            action.update(
-                {
-                    "view_mode": "form",
-                    "res_id": self.transfer_ids.id,
-                }
-            )
-        else:
-            action.update(
-                {
-                    "view_mode": "list,form",
-                    "domain": [
-                        ("id", "in", self.transfer_ids.ids),
-                        ("state", "=", ["assigned", "done"]),
-                    ],
-                }
-            )
-        return action
-
-    def action_transfer(self):
-        """
-        Creates a stock picking for transferring goods from a location to another.
-
-        :return: The created stock picking.
-        :rtype: stock.picking
-        :raises: ValidationError if an error occurs during the creation of the stock picking.
-        """
-        self.ensure_one()
-        vals = {
-            #'name': 'Incoming picking (negative product)',
-            "partner_id": self.supplier_id.id,
-            "picking_type_id": self.env.ref("stock.picking_type_in").id,
-            "location_id": self.location_id.id,
-            "location_dest_id": self.location_dest_id.id,
-            "move_ids": [
-                (
-                    0,
-                    0,
-                    {
-                        "name": self.product_name,
-                        "product_id": self.product_id.id,
-                        "product_uom": self.product_uom_id.id,
-                        "product_uom_qty": self.qty_basket,
-                        "location_id": self.location_id.id,
-                        "location_dest_id": self.location_dest_id.id,
-                    },
-                )
-            ],
-        }
-        try:
-            picking_id = self.env["stock.picking"].sudo().create(vals)
-            self.transfer_ids += picking_id
-        except Exception as e:
-            raise ValidationError(_(e))
 
     # Order's Models Methods
 

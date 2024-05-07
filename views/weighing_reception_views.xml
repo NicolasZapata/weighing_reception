@@ -112,7 +112,7 @@
                         attrs="{'invisible': [('state', 'not in', ['selection'])]}"
                     />
                     <button
-                        name="action_finish_reception"
+                        name="action_order"
                         string="Crear Orden de Compra"
                         type="object"
                         attrs="{ 
@@ -131,20 +131,7 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button
-                            name="action_view_transfer"
-                            type="object"
-                            class="oe_stat_button"
-                            icon="fa-pencil-square-o"
-                            attrs="{'invisible': [('transfer_count', '=', 0)]}"
-                        >
-                            <field
-                                name="transfer_count"
-                                widget="statinfo"
-                                string="Transferencias"
-                            />
-                        </button>
-                        <button
+                       <button
                             name="action_open_orders"
                             type="object"
                             class="oe_stat_button"
