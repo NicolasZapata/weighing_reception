@@ -11,6 +11,8 @@ _STATES = [
     ("received", "Received"),
 ]
 
+PROCUREMENT_PRIORITIES = [("0", "Normal"), ("1", "Urgent")]
+
 
 class WeighingReception(models.Model):
     _name = "weighing.reception"
@@ -18,19 +20,18 @@ class WeighingReception(models.Model):
     _description = "Weighing Reception"
     _order = "id desc"
 
+    priority = fields.Selection(
+        PROCUREMENT_PRIORITIES,
+        string="Priority",
+        default="0",
+        help="Receptions will be reserved first for the transfers with the highest priorities.",
+    )
     name = fields.Char(default="New", required=False)
     state = fields.Selection(_STATES, string="State", default="draft")
-    farmer_id = fields.Many2one(
-        "res.partner", string="Agricultor", required=True, tracking=True
-    )
-    supplier_id = fields.Many2one("res.partner", string="Proveedor")
     vehicle_license_plate = fields.Char(string="Placa vehículo")
-    driver_id = fields.Many2one("res.partner", string="Conductor")
     datetime_in = fields.Datetime(string="Fecha/hora recepción")
     datetime_out = fields.Datetime(string="Fecha/hora salida")
     employee_id = fields.Many2one("hr.employee", string="Receptor")
-    transfer_ids = fields.Many2many("stock.picking", string="Entrada")
-    transfer_count = fields.Integer(compute="_compute_transfer_count")
     vehicle_uom_id = fields.Many2one(
         "uom.uom",
         string="Unidad de medida del vehículo",
@@ -56,6 +57,7 @@ class WeighingReception(models.Model):
         help="Categoría del producto (Se usa para filtrar los productos por su categoría)",
     )
     product_name = fields.Char("Descripción")
+    # ----------------------------- Uom | Unidades de Medidas -------------------------------------------------
     standar_uom_weight_name = fields.Char(
         "uom.uom",
         related="product_id.weight_uom_name",
@@ -67,143 +69,48 @@ class WeighingReception(models.Model):
         related="product_id.uom_id",
         store=True,
     )
-    # basket | canastillas -----------------------------------------------------------------------------
+    # ----------------------------- basket | canastillas -------------------------------------------------
     qty_basket = fields.Float(string="Cantidad de canastillas")
     basket_uom_name = fields.Char(
         string="Medida de Canastilla",
         related="basket_product_id.weight_uom_name",
     )
-    basket_product_weight_unit = fields.Float(
-        string="Peso de canastillas", related="basket_product_id.weight"
-    )
+    basket_product_weight_unit = fields.Float(string="Peso de canastillas")
     basket_product_weight = fields.Float(string="Peso de canastillas")
 
-    weight_basket = fields.Boolean(string="Descontar Canastillas")
+    weight_basket = fields.Boolean(string="Descontar Canastillas", default=False)
     basket_product_id = fields.Many2one(
         "product.product", string="Producto de Canastilla"
     )
-    # ---------------------------------------------------------------------------------------------
-    # Not countable | Producto No Conforme -------------------------------------------------------
+    # ----------------------- Not countable | Producto No Conforme ----------------------------------------
     discount_product = fields.Boolean(string="Aplicar descuento del producto")
     not_countable_weight = fields.Float(string="Peso de producto no conforme")
     not_countable_weight_uom_name = fields.Char(
         string="Medida de producto no conforme", related="product_id.weight_uom_name"
     )
     no_countable_desc = fields.Float(string="Producto no conforme")
-    # ------------------------------------------------------------------------------------------------
-    location_id = fields.Many2one(
-        "stock.location",
-        "Locación origen",
+    # ----------------------- Res Partner Model Fields ----------------------------------------
+    farmer_id = fields.Many2one(
+        "res.partner", string="Agricultor", required=True, tracking=True
     )
-    location_dest_id = fields.Many2one("stock.location", "Locación destino")
+    driver_id = fields.Many2one("res.partner", string="Conductor")
+    supplier_id = fields.Many2one("res.partner", string="Proveedor")
+    # ----------------------- Order Model ----------------------------------------
     order_ids = fields.One2many(
         "purchase.order",
         "weighing_reception_id",
         string="Ordenes de compra",
     )
     purchase_order_counts = fields.Integer(compute="_compute_orders_counts")
-    reception_counts = fields.Integer(compute="_compute_reception_counts")
-    weighing_reception_id = fields.Many2one("weighing.reception", string="Recepción")
-    reception_ids = fields.One2many(
-        "weighing.reception",
-        "weighing_reception_id",
-        string="Recepciones",
+    # ----------------------- Transfer (stock.picking) Model ----------------------------------------
+    enable_locations = fields.Boolean(string="Habilitar ubicaciones")
+    location_id = fields.Many2one(
+        "stock.location",
+        "Locación origen",
     )
-
-    # Stat buttons and stat info counts
-
-    def _compute_orders_counts(self):
-        for record in self:
-            record.purchase_order_counts = len(record.order_ids.ids)
-
-    def action_open_orders(self):
-        action = {
-            "name": _("Recepciones"),
-            "type": "ir.actions.act_window",
-            "res_model": "purchase.order",
-            "context": {"create": False},
-        }
-        if len(self.order_ids) == 1:
-            action.update(
-                {
-                    "view_mode": "form",
-                    "res_id": self.order_ids.id,
-                }
-            )
-        else:
-            action.update(
-                {
-                    "view_mode": "list,form",
-                    "domain": [("id", "in", self.order_ids.ids)],
-                }
-            )
-        return action
-
-    def _compute_reception_counts(self):
-        for record in self:
-            record.reception_counts = len(record.reception_ids.ids)
-
-    def action_open_receptions(self):
-        self.ensure_one()
-        action = {
-            "name": _("Recepciones"),
-            "type": "ir.actions.act_window",
-            "res_model": "weighing.reception",
-            "context": {"create": False},
-        }
-        if len(self.reception_ids) == 1:
-            action.update(
-                {
-                    "view_mode": "form",
-                    "res_id": self.reception_ids.id,
-                }
-            )
-        else:
-            action.update(
-                {
-                    "view_mode": "list,form",
-                    "domain": [("id", "in", self.reception_ids.ids)],
-                }
-            )
-        return action
-
-    @api.depends("transfer_ids")
-    def _compute_transfer_count(self):
-        """
-        Compute the number of transfers.
-        """
-        for record in self:
-            record.transfer_count = len(record.transfer_ids.ids)
-
-    def action_view_transfer(self):
-        """
-        Generates an action to view the transfers.
-
-        :return: A dictionary representing the action to view the transfers.
-        :rtype: dict
-        """
-        self.ensure_one()
-        action = {
-            "name": _("Transferencias"),
-            "type": "ir.actions.act_window",
-            "res_model": "stock.picking",
-            "context": {"create": False},
-        }
-        if len(self.transfer_ids) == 1:
-            action.update(
-                {
-                    "view_mode": "form",
-                    "res_id": self.transfer_ids.id,
-                }
-            )
-        else:
-            action.update(
-                {
-                    "view_mode": "list,form",
-                    "domain": [("id", "in", self.transfer_ids.ids)],
-                }
-            )
-        return action
+    location_dest_id = fields.Many2one("stock.location", "Locación destino")
+    transfer_ids = fields.Many2many("stock.picking", string="Entrada")
+    transfer_count = fields.Integer(compute="_compute_transfer_count")
 
     # Computed Files (Normal Fields) and Created Files (Related Fields)
 
@@ -271,11 +178,65 @@ class WeighingReception(models.Model):
 
     def action_finish_reception(self):
         """
-        Finish the reception of the product and creates its order and transfer.
+        Finish the reception of the product and creates its order and transfer(stock.picking).
         """
         self.ensure_one()
-        self.action_transfer()
+        # TODO: Ajust the picking type based on the product order type
+        # Commented because it create a redundant picking, so, we need 
+        # to create in the purchase order model
+        # self.action_transfer() 
         self.action_order()
+
+    # Transfer (stock.picking's Model) Methods
+
+    @api.depends("transfer_ids")
+    def _compute_transfer_count(self):
+        """
+        Compute the number of transfers.
+        """
+        for rec in self:
+            # TODO: the count must be based on the state of the picking and 
+            # it be relate from # the purchase.order's picking 
+            stock_count = self.env["stock.picking"].search_count(
+                [
+                    ("id", "=", rec.transfer_ids.ids),
+                    ("state", "=", ["assigned", "done"]),
+                ]
+            )
+            rec.transfer_count = stock_count
+
+    def action_view_transfer(self):
+        """
+        Generates an action to view the transfers.
+
+        :return: A dictionary representing the action to view the transfers.
+        :rtype: dict
+        """
+        self.ensure_one()
+        action = {
+            "name": _("Transferencias"),
+            "type": "ir.actions.act_window",
+            "res_model": "stock.picking",
+            "context": {"create": False},
+        }
+        if len(self.transfer_ids) == 1:
+            action.update(
+                {
+                    "view_mode": "form",
+                    "res_id": self.transfer_ids.id,
+                }
+            )
+        else:
+            action.update(
+                {
+                    "view_mode": "list,form",
+                    "domain": [
+                        ("id", "in", self.transfer_ids.ids),
+                        ("state", "=", ["assigned", "done"]),
+                    ],
+                }
+            )
+        return action
 
     def action_transfer(self):
         """
@@ -312,6 +273,35 @@ class WeighingReception(models.Model):
             self.transfer_ids += picking_id
         except Exception as e:
             raise ValidationError(_(e))
+
+    # Order's Models Methods
+
+    def _compute_orders_counts(self):
+        for record in self:
+            record.purchase_order_counts = len(record.order_ids.ids)
+
+    def action_open_orders(self):
+        action = {
+            "name": _("Recepciones"),
+            "type": "ir.actions.act_window",
+            "res_model": "purchase.order",
+            "context": {"create": False},
+        }
+        if len(self.order_ids) == 1:
+            action.update(
+                {
+                    "view_mode": "form",
+                    "res_id": self.order_ids.id,
+                }
+            )
+        else:
+            action.update(
+                {
+                    "view_mode": "list,form",
+                    "domain": [("id", "in", self.order_ids.ids)],
+                }
+            )
+        return action
 
     def action_order(self):
         """
@@ -351,42 +341,6 @@ class WeighingReception(models.Model):
         try:
             order_id = self.env["purchase.order"].sudo().create(vals)
             self.order_ids += order_id
-        except Exception as e:
-            raise ValidationError(_(e))
-
-    def action_reception(self):
-        """
-        Creates a stock picking for transferring goods from a location to another.
-
-        :return: The created stock picking.
-        :rtype: stock.picking
-        :raises: ValidationError if an error occurs during the creation of the stock picking.
-        """
-        self.ensure_one()
-        vals = {
-            #'name': 'Incoming picking (negative product)',
-            "partner_id": self.supplier_id.id,
-            "picking_type_id": self.env.ref("stock.picking_type_in").id,
-            "location_id": self.location_id.id,
-            "location_dest_id": self.location_dest_id.id,
-            "move_ids": [
-                (
-                    0,
-                    0,
-                    {
-                        "name": self.product_name,
-                        "product_id": self.product_id.id,
-                        "product_uom": self.product_uom_id.id,
-                        "product_uom_qty": self.qty_basket,
-                        "location_id": self.location_id.id,
-                        "location_dest_id": self.location_dest_id.id,
-                    },
-                )
-            ],
-        }
-        try:
-            picking_id = self.env["weighing.reception"].sudo().create(vals)
-            self.transfer_ids += picking_id
         except Exception as e:
             raise ValidationError(_(e))
 

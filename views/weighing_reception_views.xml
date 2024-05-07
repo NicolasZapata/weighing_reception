@@ -8,6 +8,12 @@
             <!--#Todo
             Traduction No spanish-->
             <tree string="Lista de Configuraciones">
+                <field
+                    name="priority"
+                    optional="show"
+                    widget="priority"
+                    nolabel="1"
+                />
                 <field name="name" decoration-bf="True" />
                 <field
                     name="state"
@@ -113,7 +119,7 @@
                             'invisible': [
                                 '|',
                                 ('state', 'not in', 'received'),
-                                ('transfer_count', '&gt;', 0),
+                                ('purchase_order_counts', '&gt;', 0),
                             ]
                         }"
                     />
@@ -139,19 +145,6 @@
                             />
                         </button>
                         <button
-                            name="action_open_receptions"
-                            type="object"
-                            class="oe_stat_button"
-                            icon="fa-truck"
-                            attrs="{'invisible': [('reception_counts', '=', 0)]}"
-                        >
-                            <field
-                                name="reception_counts"
-                                string="Recepciones"
-                                widget="statinfo"
-                            />
-                        </button>
-                        <button
                             name="action_open_orders"
                             type="object"
                             class="oe_stat_button"
@@ -171,7 +164,13 @@
                             string="Número"
                             style="color:#c8c8c8"
                         />
-                        <h1 class="mt0">
+                        <h1 class="d-flex">
+                            <field
+                                name="priority"
+                                widget="priority"
+                                class="me-3"
+                                attrs="{'invisible': [('name','=','/')]}"
+                            />
                             <field name="name" readonly="1" />
                         </h1>
                     </div>
@@ -213,6 +212,7 @@
                                             'required': [('state','=','draft')]
                                         }"
                                         widget="res_partner_many2one"
+                                        domain="[('is_farmer', '=', True)]"
                                     />
                                     <field
                                         name="supplier_id"
@@ -238,6 +238,7 @@
                                             'required': [('state','=','draft')]
                                         }"
                                         widget="res_partner_many2one"
+                                        domain="[('is_driver', '=', True)]"
                                     />
                                 </group>
                                 <group>
@@ -248,7 +249,7 @@
                                             'required': [('state','=','draft')]
                                         }"
                                         widget="many2one_avatar_employee"
-                                        domain="[('user_id', '=', uid)]"
+                                        domain="[('id', '=', uid)]"
                                     />
                                     <field
                                         name="vehicle_uom_id"
@@ -285,9 +286,7 @@
                                     </div>
                                 </group>
                             </group>
-                        </page>
-                        <page name="product_data" string="Información del producto">
-                            <group>
+                            <group name="product_data">
                                 <group string="Datos del producto">
                                     <field
                                         name="categ_id"
@@ -320,14 +319,21 @@
                                     />
                                 </group>
                                 <group string="Datos de la transferencia">
+                                    <field name="enable_locations" widget="boolean_toggle" />
                                     <field name="active" invisible="1" />
                                     <field
                                         name="location_id"
-                                        attrs="{'required': [('state', '=', 'received')]}"
+                                        attrs="{
+                                            'required': [('enable_locations', '=', True)], 
+                                            'invisible': [('enable_locations', '=', False)]
+                                        }"
                                     />
                                     <field
                                         name="location_dest_id"
-                                        attrs="{'required': [('state', '=', 'received')]}"
+                                        attrs="{
+                                            'required': [('enable_locations', '=', True)], 
+                                            'invisible': [('enable_locations', '=', False)]
+                                        }"
                                     />
                                 </group>
                             </group>
@@ -335,30 +341,17 @@
                         <page
                             name="product_discount"
                             string="Descuento del producto"
-                            attrs="{
-                                'invisible': [
-                                    '|',
-                                    ('state', 'not in', ['selection', 'received']),
-                                    ('discount_product', '=', False)
-                                ]
-                            }"
                         >
                             <group>
                                 <label for="not_countable_weight" />
                                 <div>
                                     <field
                                         name="not_countable_weight"
-                                        attrs="{
-                                            'readonly': [('state', 'not in', ['out','selection'])], 
-                                            'required': [('weight_basket', '=', True)]
-                                        }"
+                                        attrs="{'readonly': [('discount_product', '=', False)]}"
                                         class="oe_inline"
                                     />
                                     <field
                                         name="not_countable_weight_uom_name"
-                                        attrs="{
-                                            'required': [('weight_basket', '=', True)]
-                                        }"
                                         class="oe_inline"
                                     />
                                 </div>
@@ -394,7 +387,7 @@
                                     />
                                 </group>
                                 <group>
-                                    <label for="basket_product_weight" />
+                                    <label for="basket_product_weight_unit" />
                                     <div>
                                         <field
                                             name="basket_product_weight_unit"
@@ -405,20 +398,11 @@
                                             class="oe_inline"
                                         />
                                         <field
-                                            name="basket_product_weight"
-                                            attrs="{
-                                                'readonly': True,
-                                                'required': [('weight_basket', '=', True)]
-                                            }"
-                                            class="oe_inline"
-                                        />
-                                        <field
                                             name="basket_uom_name"
                                             attrs="{
                                                 'required': [('weight_basket', '=', True)]
                                             }"
                                             class="oe_inline"
-                                            placeholder="Agregar Medida. Por ejemplo: kg"
                                         />
                                     </div>
                                 </group>
