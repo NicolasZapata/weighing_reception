@@ -306,14 +306,21 @@
                                     />
                                 </group>
                                 <group string="Datos de la transferencia">
+                                    <field name="enable_locations" widget="boolean_toggle" />
                                     <field name="active" invisible="1" />
                                     <field
                                         name="location_id"
-                                        attrs="{'required': [('state', '=', 'received')]}"
+                                        attrs="{
+                                            'required': [('enable_locations', '=', True)], 
+                                            'invisible': [('enable_locations', '=', False)]
+                                        }"
                                     />
                                     <field
                                         name="location_dest_id"
-                                        attrs="{'required': [('state', '=', 'received')]}"
+                                        attrs="{
+                                            'required': [('enable_locations', '=', True)], 
+                                            'invisible': [('enable_locations', '=', False)]
+                                        }"
                                     />
                                 </group>
                             </group>

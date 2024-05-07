@@ -75,7 +75,9 @@ class WeighingReception(models.Model):
         string="Medida de Canastilla",
         related="basket_product_id.weight_uom_name",
     )
-    basket_product_weight_unit = fields.Float(string="Peso de canastillas")
+    basket_product_weight_unit = fields.Float(
+        string="Peso de canastillas", related="basket_product_id.weight"
+    )
     basket_product_weight = fields.Float(string="Peso de canastillas")
 
     weight_basket = fields.Boolean(string="Descontar Canastillas", default=False)
@@ -102,32 +104,15 @@ class WeighingReception(models.Model):
         string="Ordenes de compra",
     )
     purchase_order_counts = fields.Integer(compute="_compute_orders_counts")
-    # ----------------------- Transfer (stock.picking) Model ----------------------------------------
+    # ----------------------- Locations ----------------------------------------
+    enable_locations = fields.Boolean(string="Habilitar ubicaciones")
     location_id = fields.Many2one(
         "stock.location",
         "Locación origen",
     )
     location_dest_id = fields.Many2one("stock.location", "Locación destino")
-    transfer_ids = fields.Many2many("stock.picking", string="Entrada")
-    transfer_count = fields.Integer(compute="_compute_transfer_count")
 
     # Computed Files (Normal Fields) and Created Files (Related Fields)
-
-    @api.depends("transfer_ids")
-    def _compute_transfer_count(self):
-        """
-        Compute the number of transfers.
-        """
-        for rec in self:
-            # TODO: the count must be based on the state of the picking and 
-            # it be relate from # the purchase.order's picking 
-            stock_count = self.env["stock.picking"].search_count(
-                [
-                    ("id", "=", rec.transfer_ids.ids),
-                    ("state", "=", ["assigned", "done"]),
-                ]
-            )
-            rec.transfer_count = stock_count
 
     @api.model
     def create(self, vals):
@@ -197,9 +182,9 @@ class WeighingReception(models.Model):
         """
         self.ensure_one()
         # TODO: Ajust the picking type based on the product order type
-        # Commented because it create a redundant picking, so, we need 
+        # Commented because it create a redundant picking, so, we need
         # to create in the purchase order model
-        # self.action_transfer() 
+        # self.action_transfer()
         self.action_order()
 
     # Order's Models Methods
