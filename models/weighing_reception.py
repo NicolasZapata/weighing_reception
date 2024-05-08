@@ -166,6 +166,7 @@ class WeighingReception(models.Model):
                 product_weight = in_weight - output - bask_weight - no_countable
             # Set the computed weight of the product
             record.product_weight = product_weight
+            record.basket_product_weight = bask_weight
 
     # Auto Creation Models Methods
 
