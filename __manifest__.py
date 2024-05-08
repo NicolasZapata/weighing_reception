@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'weighing_reception',
+    'name': 'Weighing Reception',
     'version': '16',
     'category': 'Purchase',
     'summary': '____',

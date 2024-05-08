@@ -57,6 +57,7 @@ class WeighingReception(models.Model):
         help="Categoría del producto (Se usa para filtrar los productos por su categoría)",
     )
     product_name = fields.Char("Descripción")
+    description = fields.Html("Description", translate=True)
     # ----------------------------- Uom | Unidades de Medidas -------------------------------------------------
     standar_uom_weight_name = fields.Char(
         "uom.uom",
@@ -79,7 +80,6 @@ class WeighingReception(models.Model):
         string="Peso de canastillas", related="basket_product_id.weight"
     )
     basket_product_weight = fields.Float(string="Peso de canastillas")
-
     weight_basket = fields.Boolean(string="Descontar Canastillas", default=False)
     basket_product_id = fields.Many2one(
         "product.product", string="Producto de Canastilla"
@@ -104,13 +104,6 @@ class WeighingReception(models.Model):
         string="Ordenes de compra",
     )
     purchase_order_counts = fields.Integer(compute="_compute_orders_counts")
-    # ----------------------- Locations ----------------------------------------
-    enable_locations = fields.Boolean(string="Habilitar ubicaciones")
-    location_id = fields.Many2one(
-        "stock.location",
-        "Locación origen",
-    )
-    location_dest_id = fields.Many2one("stock.location", "Locación destino")
 
     # Computed Files (Normal Fields) and Created Files (Related Fields)
 
@@ -239,6 +232,7 @@ class WeighingReception(models.Model):
         self.ensure_one()
         vals = {
             "partner_id": self.supplier_id.id,
+            "origin": self.name,
             "order_line": [
                 (
                     0,
@@ -246,7 +240,7 @@ class WeighingReception(models.Model):
                     {
                         "product_id": self.product_id.id,
                         "name": self.product_name,
-                        "product_qty": self.qty_basket,
+                        "product_qty": self.product_weight,
                     },
                 )
             ],

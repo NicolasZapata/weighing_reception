@@ -115,13 +115,7 @@
                         name="action_order"
                         string="Crear Orden de Compra"
                         type="object"
-                        attrs="{ 
-                            'invisible': [
-                                '|',
-                                ('state', 'not in', 'received'),
-                                ('purchase_order_counts', '&gt;', 0),
-                            ]
-                        }"
+                        attrs="{'invisible': ['|',('state','not in','received'),('purchase_order_counts','&gt;',0)]}"
                     />
                     <field
                         name="state"
@@ -161,16 +155,12 @@
                             <field name="name" readonly="1" />
                         </h1>
                     </div>
-                    <div
-                        name="options"
-                        attrs="{'invisible': [('state', 'not in', ['selection', 'received'])]}"
-                    >
+                    <div name="options">
                         <span class="d-inline-block">
-                            <field name="discount_product" />
-                            <label for="discount_product" />
-                        </span>
-                        <span class="d-inline-block">
-                            <field name="weight_basket" />
+                            <field
+                                name="weight_basket"
+                                attrs="{'readonly': [('state','not in',['selection'])]}"
+                            />
                             <label for="weight_basket" />
                         </span>
                     </div>
@@ -180,24 +170,15 @@
                                 <group>
                                     <field
                                         name="datetime_in"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'in')],
-                                            'required': [('state','=','in')]
-                                        }"
+                                        attrs="{'readonly': [('state', '!=', 'in')], 'required': [('state','=','in')]}"
                                     />
                                     <field
                                         name="datetime_out"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'out')], 
-                                            'required': [('state','=','out')]
-                                        }"
+                                        attrs="{'readonly': [('state', '!=', 'out')],'required': [('state','=','out')] }"
                                     />
                                     <field
                                         name="farmer_id"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'draft')],
-                                            'required': [('state','=','draft')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','draft')],'required': [('state','=','draft')]}"
                                         widget="res_partner_many2one"
                                         domain="[('is_farmer', '=', True)]"
                                     />
@@ -205,25 +186,16 @@
                                         name="supplier_id"
                                         domain="[('supplier_rank', '>', 0)]"
                                         context="{'default_supplier_rank': 1}"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'draft')],
-                                            'required': [('state','=','draft')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','draft')],'required': [('state','=','draft')]}"
                                         widget="res_partner_many2one"
                                     />
                                     <field
                                         name="vehicle_license_plate"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'draft')],
-                                            'required': [('state','=','draft')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','draft')],'required': [('state','=','draft')]}"
                                     />
                                     <field
                                         name="driver_id"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'draft')],
-                                            'required': [('state','=','draft')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','draft')], 'required': [('state','=','draft')]}"
                                         widget="res_partner_many2one"
                                         domain="[('is_driver', '=', True)]"
                                     />
@@ -231,33 +203,21 @@
                                 <group>
                                     <field
                                         name="employee_id"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'draft')],
-                                            'required': [('state','=','draft')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','draft')],'required': [('state','=','draft')]}"
                                         widget="many2one_avatar_employee"
-                                        domain="[('id', '=', uid)]"
+                                        domain="[('user_id', '=', uid)]"
                                     />
                                     <field
                                         name="vehicle_uom_id"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'in')],
-                                            'required': [('state','=','in')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','in')],'required': [('state','=','in')]}"
                                     />
                                     <field
                                         name="input_weight"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'in')], 
-                                            'required': [('state', '=', 'in')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','in')],'required': [('state','=','in')]}"
                                     />
                                     <field
                                         name="output_weight"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'out')], 
-                                            'required': [('state','=','out')]
-                                        }"
+                                        attrs="{'readonly': [('state', '!=', 'out')],'required': [('state','=','out')]}"
                                     />
                                     <label for="product_weight" />
                                     <div>
@@ -277,52 +237,30 @@
                                 <group string="Datos del producto">
                                     <field
                                         name="categ_id"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'draft')],
-                                            'required': [('state','=','draft')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','draft')],'required': [('state','=','draft')]}"
                                     />
                                     <field
                                         name="product_id"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'draft')],
-                                            'required': [('state','=','draft')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','draft')],'required': [('state','=','draft')]}"
                                         domain="[('categ_id', '=', categ_id)]"
                                     />
                                     <field
                                         name="product_name"
-                                        attrs="{
-                                            'readonly': [('state', '!=', 'draft')],
-                                            'required': [('state','=','draft')]
-                                        }"
+                                        attrs="{'readonly': [('state','!=','draft')],'required': [('state','=','draft')]}"
                                     />
                                     <field
                                         name="product_uom_id"
-                                        attrs="{
-                                            'readonly': [('state', 'not in', ['out','received'])], 
-                                            'required': [('state','=','out')]
-                                        }"
+                                        attrs="{'readonly': [('state','not in',['out','received'])],'required': [('state','=','out')]}"
                                     />
                                 </group>
-                                <group string="Datos de la transferencia">
-                                    <field name="enable_locations" widget="boolean_toggle" />
-                                    <field name="active" invisible="1" />
-                                    <field
-                                        name="location_id"
-                                        attrs="{
-                                            'required': [('enable_locations', '=', True)], 
-                                            'invisible': [('enable_locations', '=', False)]
-                                        }"
-                                    />
-                                    <field
-                                        name="location_dest_id"
-                                        attrs="{
-                                            'required': [('enable_locations', '=', True)], 
-                                            'invisible': [('enable_locations', '=', False)]
-                                        }"
-                                    />
-                                </group>
+                            </group>
+                            <group string="Internal Notes">
+                                <field
+                                    colspan="2"
+                                    name="description"
+                                    nolabel="1"
+                                    placeholder="This note is only for internal purposes."
+                                />
                             </group>
                         </page>
                         <page
@@ -334,7 +272,7 @@
                                 <div>
                                     <field
                                         name="not_countable_weight"
-                                        attrs="{'readonly': [('discount_product', '=', False)]}"
+                                        attrs="{'readonly': [('state','not in',['selection'])]}"
                                         class="oe_inline"
                                     />
                                     <field
@@ -347,29 +285,17 @@
                         <page
                             name="Canastillas"
                             string="Canastillas"
-                            attrs="{
-                                'invisible': [
-                                    '|',
-                                    ('state', 'not in', ['selection', 'received']),
-                                    ('weight_basket', '=', False)
-                                ]
-                            }"
+                            attrs="{'invisible': ['|',('state','not in',['selection','received']),('weight_basket','=',False)]}"
                         >
                             <group>
                                 <group>
                                     <field
                                         name="qty_basket"
-                                        attrs="{
-                                            'readonly': [('state', 'not in', ['selection', 'received'])], 
-                                            'required': [('weight_basket', '=', True)]
-                                        }"
+                                        attrs="{'readonly':[('state','not in',['selection', 'received'])],'required': [('weight_basket','=',True)]}"
                                     />
                                     <field
                                         name="basket_product_id"
-                                        attrs="{
-                                            'readonly': [('state', 'not in', ['out','selection'])], 
-                                            'required': [('weight_basket', '=', True)]
-                                        }"
+                                        attrs="{'readonly':[('state','not in',['out','selection'])],'required': [('weight_basket','=',True)]}"
                                         domain="[('available_in_stock', '=', True)]"
                                     />
                                 </group>
@@ -378,25 +304,17 @@
                                     <div>
                                         <field
                                             name="basket_product_weight_unit"
-                                            attrs="{
-                                                'readonly': [('state', 'not in', ['out','selection'])], 
-                                                'required': [('weight_basket', '=', True)]
-                                            }"
+                                            attrs="{'readonly': [('state','not in',['out','selection'])],'required': [('weight_basket','=',True)]}"
                                             class="oe_inline"
                                         />
                                         <field
                                             name="basket_product_weight"
-                                            attrs="{
-                                                'readonly': True,
-                                                'required': [('weight_basket', '=', True)]
-                                            }"
+                                            attrs="{'readonly': True,'required': [('weight_basket','=',True)]}"
                                             class="oe_inline"
                                         />
                                         <field
                                             name="basket_uom_name"
-                                            attrs="{
-                                                'required': [('weight_basket', '=', True)]
-                                            }"
+                                            attrs="{'required': [('weight_basket','=',True)]}"
                                             class="oe_inline"
                                         />
                                     </div>
