@@ -300,8 +300,6 @@
                                     />
                                 </group>
                                 <group>
-                                    <label for="basket_product_weight_unit" />
-                                    <div>
                                         <field
                                             name="basket_product_weight_unit"
                                             attrs="{'readonly': [('state','not in',['out','selection'])],'required': [('weight_basket','=',True)]}"
@@ -317,7 +315,6 @@
                                             attrs="{'required': [('weight_basket','=',True)]}"
                                             class="oe_inline"
                                         />
-                                    </div>
                                 </group>
                             </group>
                         </page>
