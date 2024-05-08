@@ -150,6 +150,20 @@
                         </h1>
                     </div>
                     <div name="options">
+                        <span class="d-inline-block" style="padding-right: 13px;">
+                            <label for="datetime_in" />
+                            <field
+                                name="datetime_in"
+                                attrs="{'readonly': [('state', '!=', 'in')], 'required': [('state','=','in')]}"
+                            />
+                        </span>
+                        <span class="d-inline-block" style="padding-right: 13px;">
+                            <label for="datetime_out" />
+                            <field
+                                name="datetime_out"
+                                attrs="{'readonly': [('state', '!=', 'out')],'required': [('state','=','out')] }"
+                            />
+                        </span>
                         <span class="d-inline-block">
                             <field
                                 name="weight_basket"
@@ -157,19 +171,12 @@
                             />
                             <label for="weight_basket" />
                         </span>
+
                     </div>
                     <notebook>
                         <page string="Datos generales">
                             <group>
                                 <group>
-                                    <field
-                                        name="datetime_in"
-                                        attrs="{'readonly': [('state', '!=', 'in')], 'required': [('state','=','in')]}"
-                                    />
-                                    <field
-                                        name="datetime_out"
-                                        attrs="{'readonly': [('state', '!=', 'out')],'required': [('state','=','out')] }"
-                                    />
                                     <field
                                         name="farmer_id"
                                         attrs="{'readonly': [('state','!=','draft')],'required': [('state','=','draft')]}"
@@ -289,21 +296,21 @@
                                     />
                                 </group>
                                 <group>
-                                        <field
-                                            name="basket_product_weight_unit"
-                                            attrs="{'readonly': [('state','not in',['out','selection'])],'required': [('weight_basket','=',True)]}"
-                                            class="oe_inline"
-                                        />
-                                        <field
-                                            name="basket_product_weight"
-                                            attrs="{'readonly': True,'required': [('weight_basket','=',True)]}"
-                                            class="oe_inline"
-                                        />
-                                        <field
-                                            name="basket_uom_name"
-                                            attrs="{'required': [('weight_basket','=',True)]}"
-                                            class="oe_inline"
-                                        />
+                                    <field
+                                        name="basket_product_weight_unit"
+                                        attrs="{'readonly': [('state','not in',['out','selection'])],'required': [('weight_basket','=',True)]}"
+                                        class="oe_inline"
+                                    />
+                                    <field
+                                        name="basket_product_weight"
+                                        attrs="{'readonly': True,'required': [('weight_basket','=',True)]}"
+                                        class="oe_inline"
+                                    />
+                                    <field
+                                        name="basket_uom_name"
+                                        attrs="{'required': [('weight_basket','=',True)]}"
+                                        class="oe_inline"
+                                    />
                                 </group>
                             </group>
                         </page>
