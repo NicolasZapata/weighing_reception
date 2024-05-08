@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0-20231120\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-08 16:55+0000\n"
-"PO-Revision-Date: 2024-05-08 11:58-0500\n"
+"PO-Revision-Date: 2024-05-08 12:55-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_CO\n"
@@ -19,9 +19,8 @@ msgstr ""
 
 #. module: weighing_reception
 #: model:ir.actions.report,print_report_name:weighing_reception.action_weighing_reception_report
-#, fuzzy
 msgid "'Weighing_%s' % object.name"
-msgstr "'Weighing_%s' % object.name"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_needaction
@@ -55,21 +54,18 @@ msgstr "Activo"
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__farmer_id
-#, fuzzy
 msgid "Agricultor"
-msgstr "Agricultor"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Agricultor:"
-msgstr "Agricultor:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__discount_product
-#, fuzzy
 msgid "Aplicar descuento del producto"
-msgstr "Aplicar descuento del producto"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_attachment_count
@@ -78,35 +74,29 @@ msgstr "Recuento de adjuntos"
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "Canastillas"
-msgstr "Canastillas"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__qty_basket
-#, fuzzy
 msgid "Cantidad de canastillas"
-msgstr "Cantidad de canastillas"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Cantidad:"
-msgstr "Cantidad:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__categ_id
-#, fuzzy
 msgid "Categoría del Producto"
-msgstr "Categoría del Producto"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,help:weighing_reception.field_weighing_reception__categ_id
-#, fuzzy
 msgid ""
 "Categoría del producto (Se usa para filtrar los productos por su categoría)"
 msgstr ""
-"Categoría del producto (Se usa para filtrar los productos por su categoría)"
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
@@ -116,12 +106,12 @@ msgstr "Registrarse"
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__driver_id
 msgid "Conductor"
-msgstr "Director"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
 msgid "Conductor:"
-msgstr "Director:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model,name:weighing_reception.model_res_partner
@@ -130,15 +120,13 @@ msgstr "Contacto"
 
 #. module: weighing_reception
 #: model_terms:ir.actions.act_window,help:weighing_reception.action_weighing_reception
-#, fuzzy
 msgid "Crea una nueva recepción de peso"
-msgstr "Crea una nueva recepción de peso"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "Crear Orden de Compra"
-msgstr "Crear Orden de Compra"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__create_uid
@@ -152,33 +140,28 @@ msgstr "Creado en"
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "DATOS DE TRANSFERENCIA"
-msgstr "DATOS DE TRANSFERENCIA"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "DATOS DEL PRODUCTO"
-msgstr "DATOS DEL PRODUCTO"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "DATOS GENERALES"
-msgstr "DATOS GENERALES"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "Datos del producto"
-msgstr "Datos del producto"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "Datos generales"
-msgstr "Datos generales"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,help:weighing_reception.field_weighing_reception__product_uom_id
@@ -188,9 +171,8 @@ msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__weight_basket
-#, fuzzy
 msgid "Descontar Canastillas"
-msgstr "Descontar Canastillas"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__product_name
@@ -199,9 +181,8 @@ msgstr "Descripción"
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Descripción:"
-msgstr "Descripción:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__description
@@ -210,9 +191,8 @@ msgstr "Descripción"
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "Descuento del producto"
-msgstr "Descuento del producto"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__display_name
@@ -222,15 +202,13 @@ msgstr "Nombre para Mostrar"
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_product_product__available_in_stock
 #: model:ir.model.fields,field_description:weighing_reception.field_product_template__available_in_stock
-#, fuzzy
 msgid "Disponible en pesaje de compras"
-msgstr "Disponible en pesaje de compras"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "Entrar"
-msgstr "Entrar"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields.selection,name:weighing_reception.selection__weighing_reception__state__out
@@ -239,27 +217,23 @@ msgstr "Salida"
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__datetime_in
-#, fuzzy
 msgid "Fecha/hora recepción"
-msgstr "Fecha/hora recepción"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Fecha/hora recepción:"
-msgstr "Fecha/hora recepción:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__datetime_out
-#, fuzzy
 msgid "Fecha/hora salida"
-msgstr "Fecha/hora salida"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Fecha/hora salida:"
-msgstr "Fecha/hora salida:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_follower_ids
@@ -314,9 +288,8 @@ msgstr "Entrada"
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "Internal Notes"
-msgstr "Notas internas"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_res_partner__is_driver
@@ -352,21 +325,18 @@ msgstr "Última actualización en"
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_tree
-#, fuzzy
 msgid "Lista de Configuraciones"
-msgstr "Lista de Configuraciones"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Locación destino:"
-msgstr "Locación destino:"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Locación origen:"
-msgstr "Locación origen:"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
@@ -380,21 +350,18 @@ msgstr "Adjunto principal"
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_uom_name
-#, fuzzy
 msgid "Medida de Canastilla"
-msgstr "Medida de Canastilla"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__not_countable_weight_uom_name
-#, fuzzy
 msgid "Medida de producto no conforme"
-msgstr "Medida de producto no conforme"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__product_uom_id
-#, fuzzy
 msgid "Medida del producto"
-msgstr "Medida del producto"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_has_error
@@ -471,9 +438,8 @@ msgstr "Número de mensajes con error de entrega"
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "Número"
-msgstr "Número"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__order_ids
@@ -488,63 +454,53 @@ msgstr "Órdenes de venta"
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_weight
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_weight_unit
-#, fuzzy
 msgid "Peso de canastillas"
-msgstr "Peso de canastillas"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__input_weight
-#, fuzzy
 msgid "Peso de entrada del vehículo"
-msgstr "Peso de entrada del vehículo"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__not_countable_weight
-#, fuzzy
 msgid "Peso de producto no conforme"
-msgstr "Peso de producto no conforme"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__output_weight
-#, fuzzy
 msgid "Peso de salida del vehículo"
-msgstr "Peso de salida del vehículo"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__product_weight
-#, fuzzy
 msgid "Peso del producto neto"
-msgstr "Peso del producto neto"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Peso entrada:"
-msgstr "Peso entrada:"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Peso producto:"
-msgstr "Peso producto:"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Peso salida:"
-msgstr "Peso salida:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__vehicle_license_plate
-#, fuzzy
 msgid "Placa vehículo"
-msgstr "Placa vehículo"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Placa vehículo:"
-msgstr "Placa vehículo:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__priority
@@ -563,39 +519,33 @@ msgstr "Producto"
 
 #. module: weighing_reception
 #: model:ir.model.fields,help:weighing_reception.field_weighing_reception__product_id
-#, fuzzy
 msgid "Producto (Se usa para filtrar los productos)"
-msgstr "Producto (Se usa para filtrar los productos)"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_id
-#, fuzzy
 msgid "Producto de Canastilla"
-msgstr "Producto de Canastilla"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__no_countable_desc
-#, fuzzy
 msgid "Producto no conforme"
-msgstr "Producto no conforme"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Producto:"
-msgstr "Producto:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__supplier_id
-#, fuzzy
 msgid "Proveedor"
-msgstr "Proveedor"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Proveedor:"
-msgstr "Proveedor:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model,name:weighing_reception.model_purchase_order
@@ -628,23 +578,21 @@ msgstr "Recibido"
 #. module: weighing_reception
 #. odoo-python
 #: code:addons/weighing_reception/models/weighing_reception.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Recepciones"
-msgstr "Recepciones"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.actions.act_window,name:weighing_reception.action_weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_purchase_order__weighing_reception_id
 #: model:ir.ui.menu,name:weighing_reception.menu_purchase_weighing_reception
-#, fuzzy
 msgid "Recepción"
-msgstr "Recepción"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.actions.report,name:weighing_reception.action_weighing_reception_report
-#, fuzzy
 msgid "Recepción de pesaje"
-msgstr "Recepción de pesaje"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,help:weighing_reception.field_weighing_reception__priority
@@ -657,21 +605,18 @@ msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__employee_id
-#, fuzzy
 msgid "Receptor"
-msgstr "Receptor"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Receptor:"
-msgstr "Receptor:"
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "Recibir"
-msgstr "Recibir"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__activity_user_id
@@ -713,15 +658,13 @@ msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
-#, fuzzy
 msgid "This note is only for internal purposes."
-msgstr "Esta nota es solo para fines internos."
+msgstr ""
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
-#, fuzzy
 msgid "Transferencia:"
-msgstr "Transferencia:"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,help:weighing_reception.field_weighing_reception__activity_exception_decoration
@@ -730,9 +673,8 @@ msgstr "Tipo de actividad de excepción registrada."
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__vehicle_uom_id
-#, fuzzy
 msgid "Unidad de medida del vehículo"
-msgstr "Unidad de medida del vehículo"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields.selection,name:weighing_reception.selection__weighing_reception__priority__1
@@ -756,6 +698,5 @@ msgstr "Recepción de pesaje"
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__standar_uom_weight_name
-#, fuzzy
 msgid "uom.uom"
-msgstr "uom.uom"
+msgstr ""

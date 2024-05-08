@@ -31,11 +31,8 @@ class WeighingReception(models.Model):
     vehicle_license_plate = fields.Char(string="Placa vehículo")
     datetime_in = fields.Datetime(string="Fecha/hora recepción")
     datetime_out = fields.Datetime(string="Fecha/hora salida")
-    employee_id = fields.Many2one("hr.employee", string="Receptor")
-    vehicle_uom_id = fields.Many2one(
-        "uom.uom",
-        string="Unidad de medida del vehículo",
-        store=True,
+    employee_id = fields.Many2one(
+        "hr.employee", string="Receptor", default=lambda self: self.env.user.employee_id
     )
     input_weight = fields.Float(string="Peso de entrada del vehículo")
     output_weight = fields.Float(string="Peso de salida del vehículo")
@@ -151,7 +148,7 @@ class WeighingReception(models.Model):
         for record in self:
             # Initialize the weight of the product
             product_weight = 0
-            bask_weight=0
+            bask_weight = 0
             # If the weight of the product at the entrance and the weight of
             # the product at the exit are available
             if record.input_weight and record.output_weight:
