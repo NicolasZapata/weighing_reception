@@ -151,6 +151,7 @@ class WeighingReception(models.Model):
         for record in self:
             # Initialize the weight of the product
             product_weight = 0
+            bask_weight=0
             # If the weight of the product at the entrance and the weight of
             # the product at the exit are available
             if record.input_weight and record.output_weight:
