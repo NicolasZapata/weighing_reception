@@ -34,8 +34,8 @@ class WeighingReception(models.Model):
     employee_id = fields.Many2one(
         "hr.employee", string="Receptor", default=lambda self: self.env.user.employee_id
     )
-    input_weight = fields.Float(string="Peso de entrada del vehículo", store=True)
-    output_weight = fields.Float(string="Peso de salida del vehículo", strore=True)
+    input_weight = fields.Float( string="Peso de entrada del vehículo")
+    output_weight = fields.Float(string="Peso de salida del vehículo")
     product_weight = fields.Float(
         string="Peso del producto neto",
         compute="_compute_product_weight",
