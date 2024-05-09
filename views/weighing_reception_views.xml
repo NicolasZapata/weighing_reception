@@ -154,14 +154,14 @@
                             <label for="datetime_in" />
                             <field
                                 name="datetime_in"
-                                attrs="{'readonly': [('state', '!=', 'in')], 'required': [('state','=','in')]}"
+                                attrs="{'readonly': [('state','!=','in')],'required': [('state','=','in')]}"
                             />
                         </span>
                         <span class="d-inline-block" style="padding-right: 13px;">
                             <label for="datetime_out" />
                             <field
                                 name="datetime_out"
-                                attrs="{'readonly': [('state', '!=', 'out')],'required': [('state','=','out')] }"
+                                attrs="{'readonly': [('state','!=','out')],'required': [('state','=','out')] }"
                             />
                         </span>
                         <span class="d-inline-block">
@@ -171,7 +171,6 @@
                             />
                             <label for="weight_basket" />
                         </span>
-
                     </div>
                     <notebook>
                         <page string="Datos generales">
@@ -196,7 +195,7 @@
                                     />
                                     <field
                                         name="driver_id"
-                                        attrs="{'readonly': [('state','!=','draft')], 'required': [('state','=','draft')]}"
+                                        attrs="{'readonly': [('state','!=','draft')],'required': [('state','=','draft')]}"
                                         widget="res_partner_many2one"
                                         domain="[('is_driver', '=', True)]"
                                     />
@@ -209,12 +208,12 @@
                                     />
                                     <field
                                         name="input_weight"
-                                        attrs="{'readonly': [('state', '!=', 'in')], 'required': [('state','=','in')]}"
+                                        attrs="{'readonly': [('state','!=','in')],'required': [('state','=','in')]}"
                                         decoration-it="True"
                                     />
                                     <field
                                         name="output_weight"
-                                        attrs="{'readonly': [('state', '!=', 'out')],'required': [('state','=','out')]}"
+                                        attrs="{'readonly': [('state','!=','out')],'required': [('state','=','out')]}"
                                         decoration-it="True"
                                     />
                                     <label for="product_weight" />
@@ -252,6 +251,37 @@
                                         name="product_uom_id"
                                         attrs="{'readonly': [('state','not in',['out','received'])],'required': [('state','=','out')]}"
                                     />
+                                </group>
+                                <group name="weighing_reception_footer" string="Pesaje">
+                                    <group
+                                        class="oe_subtotal_footer oe_left"
+                                        colspan="2"
+                                        name="weighing_reception_footer"
+                                    >
+                                        <field name="input_weight" readonly="1" />
+                                        <div class="oe_inline o_td_label">
+                                            <label for="output_weight"
+                                                string="Peso del vehículo sin cargamento" />
+                                        </div>
+                                        <field name="output_weight" nolabel="1" readonly="1" />
+                                        <div class="oe_inline o_td_label">
+                                            <label for="not_countable_weight" />
+                                        </div>
+                                        <field name="not_countable_weight" nolabel="1" readonly="1" />
+                                        <div class="oe_inline o_td_label">
+                                            <label for="basket_product_weight" />
+                                        </div>
+                                        <field name="basket_product_weight" nolabel="1" readonly="1" />
+                                        <div class="oe_inline o_td_label">
+                                            <label for="product_weight" />
+                                        </div>
+                                        <field
+                                            name="product_weight"
+                                            nolabel="1"
+                                            class="oe_subtotal_footer_separator"
+                                            readonly="1"
+                                        />
+                                    </group>
                                 </group>
                             </group>
                             <group string="Internal Notes">
@@ -332,7 +362,7 @@
         </field>
     </record>
 
-    <!--Todo:
+    <!--TODO:
     Configuration action-->
     <record model="ir.actions.act_window" id="action_weighing_reception">
         <field name="name">Recepción</field>
@@ -345,7 +375,7 @@
         </field>
     </record>
 
-    <!--Todo:
+    <!--TODO:
     Configuration Menú-->
     <menuitem
         id="menu_purchase_weighing_reception"
