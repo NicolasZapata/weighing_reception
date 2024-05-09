@@ -246,7 +246,8 @@
         <field name="report_name">weighing_reception.report_weighing_reception</field>
         <field name="report_file">weighing_reception.report_weighing_reception</field>
         <field name="print_report_name">'Weighing_%s' % object.name</field>
-        <field name="binding_model_id" ref="model_weighing_reception" />
+        <!-- <field name="binding_model_id" ref="model_weighing_reception" /> -->
+        <field name="binding_model_id" eval="False" />
         <field name="paperformat_id" ref="weighing_reception.paperformat_weighing_reception" />
         <field name="binding_type">report</field>
     </record>

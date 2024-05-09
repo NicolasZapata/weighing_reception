@@ -7,7 +7,7 @@ _STATES = [
     ("draft", "New"),
     ("in", "Input"),
     ("out", "Exit"),
-    ("selection", "Selectión"),
+    ("selection", "Selection"),
     ("received", "Received"),
 ]
 
@@ -74,7 +74,8 @@ class WeighingReception(models.Model):
         related="basket_product_id.weight_uom_name",
     )
     basket_product_weight_unit = fields.Float(
-        string="Peso de canastillas", related="basket_product_id.weight"
+        string="Unidad de peso de canastillas", 
+        related="basket_product_id.weight"
     )
     basket_product_weight = fields.Float(string="Peso de canastillas")
     weight_basket = fields.Boolean(string="Descontar Canastillas", default=False)
@@ -166,18 +167,6 @@ class WeighingReception(models.Model):
             record.product_weight = product_weight
             record.basket_product_weight = bask_weight
 
-    # Auto Creation Models Methods
-
-    def action_finish_reception(self):
-        """
-        Finish the reception of the product and creates its order and transfer(stock.picking).
-        """
-        self.ensure_one()
-        # TODO: Ajust the picking type based on the product order type
-        # Commented because it create a redundant picking, so, we need
-        # to create in the purchase order model
-        # self.action_transfer()
-        self.action_order()
 
     # Order's Models Methods
 
@@ -247,6 +236,7 @@ class WeighingReception(models.Model):
         try:
             order_id = self.env["purchase.order"].sudo().create(vals)
             self.order_ids += order_id
+            self.state = "received"
         except Exception as e:
             raise ValidationError(_(e))
 
@@ -264,13 +254,9 @@ class WeighingReception(models.Model):
         self.ensure_one()
         self.state = "selection"
 
-    def action_received(self):
-        self.ensure_one()
-        self.state = "received"
-
     def action_print(self):
         """
         A description of the entire function, its parameters, and its return types.
         """
         self.ensure_one()
-        pass
+        return self.env.ref("weighing_reception.action_weighing_reception_report").read()[0]

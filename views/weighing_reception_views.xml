@@ -100,16 +100,16 @@
                         attrs="{'invisible': [('state', 'not in', ['out'])]}"
                     />
                     <button
-                        name="action_received"
-                        string="Recibir"
-                        type="object"
-                        attrs="{'invisible': [('state', 'not in', ['selection'])]}"
-                    />
-                    <button
                         name="action_order"
                         string="Crear Orden de Compra"
                         type="object"
-                        attrs="{'invisible': ['|',('state','not in','received'),('purchase_order_counts','&gt;',0)]}"
+                        attrs="{'invisible': ['|',('state','not in','selection'),('purchase_order_counts','&gt;',0)]}"
+                    />
+                    <button
+                        name="action_print"
+                        string="Print Weighing Reception"
+                        type="object"
+                        attrs="{'invisible': ['|',('state','not in','received'),('purchase_order_counts', '=', 0)]}"
                     />
                     <field
                         name="state"
@@ -209,21 +209,25 @@
                                     />
                                     <field
                                         name="input_weight"
-                                        attrs="{'readonly': [('state','!=','in')],'required': [('state','=','in')]}"
+                                        attrs="{'readonly': [('state', '!=', 'in')], 'required': [('state','=','in')]}"
+                                        decoration-it="True"
                                     />
                                     <field
                                         name="output_weight"
                                         attrs="{'readonly': [('state', '!=', 'out')],'required': [('state','=','out')]}"
+                                        decoration-it="True"
                                     />
                                     <label for="product_weight" />
                                     <div>
                                         <field
                                             name="product_weight"
+                                            decoration-bf="True"
                                             attrs="{'required': [('state','=',['out'])]}"
                                             class="oe_inline"
                                         />
                                         <field
                                             name="standar_uom_weight_name"
+                                            decoration-it="True"
                                             class="oe_inline"
                                         />
                                     </div>
@@ -268,11 +272,13 @@
                                 <div>
                                     <field
                                         name="not_countable_weight"
+                                        decoration-it="True"
                                         attrs="{'readonly': [('state','not in',['selection'])]}"
                                         class="oe_inline"
                                     />
                                     <field
                                         name="not_countable_weight_uom_name"
+                                        decoration-it="True"
                                         class="oe_inline"
                                     />
                                 </div>
@@ -299,6 +305,7 @@
                                     <field
                                         name="basket_product_weight_unit"
                                         attrs="{'readonly': [('state','not in',['out','selection'])],'required': [('weight_basket','=',True)]}"
+                                        decoration-it="True"
                                         class="oe_inline"
                                     />
                                     <field
@@ -344,6 +351,7 @@
         id="menu_purchase_weighing_reception"
         action="action_weighing_reception"
         parent="purchase.menu_procurement_management"
+        groups="weighing_reception.group_weighing_user"
         sequence="1"
     />
 

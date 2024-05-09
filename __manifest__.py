@@ -11,6 +11,7 @@
     'depends': ['base', 'purchase', 'stock', 'hr', 'agriculture_management_odoo'],
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         'data/ir_sequence_data.xml',
         'views/weighing_reception_views.xml',
         'views/product_template_view.xml',
