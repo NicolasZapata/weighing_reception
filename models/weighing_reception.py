@@ -74,9 +74,9 @@ class WeighingReception(models.Model):
         related="basket_product_id.weight_uom_name",
     )
     basket_product_weight_unit = fields.Float(
-        string="Peso de canastillas", related="basket_product_id.weight"
+        string="Peso Unitario de canastillas", related="basket_product_id.weight"
     )
-    basket_product_weight = fields.Float(string="Peso de canastillas")
+    basket_product_weight = fields.Float(string="Peso neto de canastillas")
     weight_basket = fields.Boolean(string="Descontar Canastillas", default=False)
     basket_product_id = fields.Many2one(
         "product.product", string="Producto de Canastilla"
