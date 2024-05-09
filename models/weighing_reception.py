@@ -34,8 +34,8 @@ class WeighingReception(models.Model):
     employee_id = fields.Many2one(
         "hr.employee", string="Receptor", default=lambda self: self.env.user.employee_id
     )
-    input_weight = fields.Float(string="Peso de entrada del vehículo")
-    output_weight = fields.Float(string="Peso de salida del vehículo")
+    input_weight = fields.Float(string="Peso de entrada del vehículo", store=True)
+    output_weight = fields.Float(string="Peso de salida del vehículo", strore=True)
     product_weight = fields.Float(
         string="Peso del producto neto",
         compute="_compute_product_weight",
@@ -166,7 +166,6 @@ class WeighingReception(models.Model):
             record.product_weight = product_weight
             record.basket_product_weight = bask_weight
 
-
     # Order's Models Methods
 
     def _compute_orders_counts(self):
@@ -258,4 +257,6 @@ class WeighingReception(models.Model):
         A description of the entire function, its parameters, and its return types.
         """
         self.ensure_one()
-        return self.env.ref("weighing_reception.action_weighing_reception_report").read()[0]
+        return self.env.ref(
+            "weighing_reception.action_weighing_reception_report"
+        ).read()[0]

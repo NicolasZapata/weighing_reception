@@ -252,38 +252,7 @@
                                         attrs="{'readonly': [('state','not in',['out','received'])],'required': [('state','=','out')]}"
                                     />
                                 </group>
-                                <group name="weighing_reception_footer" string="Pesaje">
-                                    <group
-                                        class="oe_subtotal_footer oe_left"
-                                        colspan="2"
-                                        name="weighing_reception_footer"
-                                    >
-                                        <field name="input_weight" readonly="1" />
-                                        <div class="oe_inline o_td_label">
-                                            <label for="output_weight"
-                                                string="Peso del vehículo sin cargamento" />
-                                        </div>
-                                        <field name="output_weight" nolabel="1" readonly="1" />
-                                        <div class="oe_inline o_td_label">
-                                            <label for="not_countable_weight" />
-                                        </div>
-                                        <field name="not_countable_weight" nolabel="1" readonly="1" />
-                                        <div class="oe_inline o_td_label">
-                                            <label for="basket_product_weight" />
-                                        </div>
-                                        <field name="basket_product_weight" nolabel="1" readonly="1" />
-                                        <div class="oe_inline o_td_label">
-                                            <label for="product_weight" />
-                                        </div>
-                                        <field
-                                            name="product_weight"
-                                            nolabel="1"
-                                            class="oe_subtotal_footer_separator"
-                                            readonly="1"
-                                        />
-                                    </group>
-                                </group>
-                            </group>
+                           </group>
                             <group string="Internal Notes">
                                 <field
                                     colspan="2"
