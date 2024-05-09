@@ -345,13 +345,26 @@
         </field>
     </record>
 
+    <record id="view_purchase_order_header_tree" model="ir.ui.view">
+        <field name="name">purchase.order</field>
+        <field name="model">weighing.reception</field>
+        <field name="inherit_id" ref="weighing_reception.view_weighing_reception_tree" />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <!-- Display the tree dashboard view with the header -->
+                <attribute name="js_class">purchase_dashboard_list</attribute>
+            </xpath>
+        </field>
+    </record>
+
     <!--Todo:
     Configuration Menú-->
     <menuitem
         id="menu_purchase_weighing_reception"
         action="action_weighing_reception"
         parent="purchase.menu_procurement_management"
-        groups="weighing_reception.group_weighing_user"
+        groups="weighing_reception.group_weighing_reception_admin"
         sequence="1"
     />
 
