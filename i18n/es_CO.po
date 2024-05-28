@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0-20231120\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-09 13:43+0000\n"
-"PO-Revision-Date: 2024-05-09 08:55-0500\n"
+"POT-Creation-Date: 2024-05-28 18:08+0000\n"
+"PO-Revision-Date: 2024-05-28 13:12-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_CO\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.3\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #. module: weighing_reception
 #: model:ir.actions.report,print_report_name:weighing_reception.action_weighing_reception_report
@@ -88,6 +88,11 @@ msgid "Cantidad:"
 msgstr ""
 
 #. module: weighing_reception
+#: model:ir.module.category,description:weighing_reception.module_weighing_reception
+msgid "Category for Weighing Reception"
+msgstr ""
+
+#. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__categ_id
 msgid "Categoría del Producto"
 msgstr ""
@@ -97,6 +102,17 @@ msgstr ""
 msgid ""
 "Categoría del producto (Se usa para filtrar los productos por su categoría)"
 msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__check_user
+#, fuzzy
+msgid "Check User"
+msgstr "Comprobar usuario"
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__check_weighning
+msgid "Check Weighing"
+msgstr "Requiere pesaje"
 
 #. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
@@ -116,7 +132,7 @@ msgstr ""
 #. module: weighing_reception
 #: model:ir.model,name:weighing_reception.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contacto"
 
 #. module: weighing_reception
 #: model_terms:ir.actions.act_window,help:weighing_reception.action_weighing_reception
@@ -303,7 +319,7 @@ msgstr "Es el conductor"
 #: model:ir.model.fields,field_description:weighing_reception.field_res_partner__is_farmer
 #: model:ir.model.fields,field_description:weighing_reception.field_res_users__is_farmer
 msgid "Is Farmer"
-msgstr "Es el agricultor"
+msgstr "Es granjero"
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_is_follower
@@ -339,6 +355,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__message_main_attachment_id
 msgid "Main Attachment"
 msgstr "Adjunto principal"
+
+#. module: weighing_reception
+#: model:res.groups,name:weighing_reception.group_weighing_reception_admin
+msgid "Manager"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_uom_name
@@ -444,8 +465,13 @@ msgid "Ordenes de venta"
 msgstr "Órdenes de venta"
 
 #. module: weighing_reception
-#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_weight
-msgid "Peso de canastillas"
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Pesaje"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_weight_unit
+msgid "Peso Unitario de canastillas"
 msgstr ""
 
 #. module: weighing_reception
@@ -469,8 +495,18 @@ msgid "Peso del producto neto"
 msgstr ""
 
 #. module: weighing_reception
+#: model_terms:ir.ui.view,arch_db:weighing_reception.view_weighing_reception_form
+msgid "Peso del vehículo sin cargamento"
+msgstr ""
+
+#. module: weighing_reception
 #: model_terms:ir.ui.view,arch_db:weighing_reception.weighing_reception_template
 msgid "Peso entrada:"
+msgstr ""
+
+#. module: weighing_reception
+#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_weight
+msgid "Peso neto de canastillas"
 msgstr ""
 
 #. module: weighing_reception
@@ -651,14 +687,14 @@ msgid "Type of the exception activity on record."
 msgstr "Tipo de actividad de excepción registrada."
 
 #. module: weighing_reception
-#: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__basket_product_weight_unit
-msgid "Unidad de peso de canastillas"
-msgstr ""
-
-#. module: weighing_reception
 #: model:ir.model.fields.selection,name:weighing_reception.selection__weighing_reception__priority__1
 msgid "Urgent"
 msgstr "Urgente"
+
+#. module: weighing_reception
+#: model:res.groups,name:weighing_reception.group_weighing_user
+msgid "User"
+msgstr ""
 
 #. module: weighing_reception
 #: model:ir.model.fields,field_description:weighing_reception.field_weighing_reception__website_message_ids
@@ -672,6 +708,7 @@ msgstr "Historial de comunicación del sitio web"
 
 #. module: weighing_reception
 #: model:ir.model,name:weighing_reception.model_weighing_reception
+#: model:ir.module.category,name:weighing_reception.module_weighing_reception
 msgid "Weighing Reception"
 msgstr "Recepción de pesaje"
 

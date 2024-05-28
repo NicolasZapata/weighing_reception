@@ -34,7 +34,7 @@ class WeighingReception(models.Model):
     employee_id = fields.Many2one(
         "hr.employee", string="Receptor", default=lambda self: self.env.user.employee_id
     )
-    input_weight = fields.Float( string="Peso de entrada del vehículo")
+    input_weight = fields.Float(string="Peso de entrada del vehículo")
     output_weight = fields.Float(string="Peso de salida del vehículo")
     product_weight = fields.Float(
         string="Peso del producto neto",
@@ -52,6 +52,7 @@ class WeighingReception(models.Model):
         "product.category",
         string="Categoría del Producto",
         help="Categoría del producto (Se usa para filtrar los productos por su categoría)",
+        default=lambda self: self.env.ref("product.product_category_all").id,
     )
     product_name = fields.Char("Descripción")
     description = fields.Html("Description", translate=True)
@@ -101,8 +102,26 @@ class WeighingReception(models.Model):
         string="Ordenes de compra",
     )
     purchase_order_counts = fields.Integer(compute="_compute_orders_counts")
+    check_weighning = fields.Boolean(string="Check Weighing", default=False)
+    check_user = fields.Boolean(compute="_compute_check_user")
 
     # Computed Files (Normal Fields) and Created Files (Related Fields)
+
+    def _compute_check_user(self):
+        """
+        Compute the value of the 'check_user' field based on the user's group membership.
+
+        This method checks if the current user belongs to the 'weighing_reception.group_weighing_reception_admin' group.
+        If the user is a member of the group, the 'check_user' field is set to True.
+        Otherwise, the 'check_user' field is set to False.
+
+        Parameters:
+            self: The current instance of the class.
+        """
+        if self.user_has_groups("weighing_reception.group_weighing_reception_admin"):
+            self.check_user = True
+        else:
+            self.check_user = False
 
     @api.model
     def create(self, vals):
